@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinaredstar.cms.mapper.ActivityPrizeMarketMapper" >
+  <resultMap id="BaseResultMap" type="com.chinaredstar.cms.api.model.ActivityPrizeMarket" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="prize_name" property="prizeName" jdbcType="VARCHAR" />
+    <result column="prize_url" property="prizeUrl" jdbcType="VARCHAR" />
+    <result column="market_name" property="marketName" jdbcType="VARCHAR" />
+    <result column="market_code" property="marketCode" jdbcType="VARCHAR" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="game_round" property="gameRound" jdbcType="INTEGER" />
+    <result column="shop_number" property="shopNumber" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, prize_name, prize_url, market_name, market_code, count,game_round,shop_number
+  </sql>
+
+<!--
+  <select id="queryByDataMap" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT  id, prize_name, prize_url, market_name, market_code,game_round,shop_number
+    FROM activity_prize_market
+    <where>
+      <if test="marketCode!=null">
+        market_code = #{marketCode,jdbcType=VARCHAR}
+      </if>
+      <if test="gameRound!=null">
+        AND game_round = #{gameRound,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+-->
+  <select id="queryByDataMap" resultMap="BaseResultMap" parameterType="java.util.Map">
+    SELECT
+    aa.id, aa.prize_name, aa.prize_url, aa.market_name,aa.market_code,aa.game_round,aa.shop_number,
+    ifnull(ab.total,0)  count
+    FROM (
+    (SELECT *
+     FROM activity_prize_market ak
+     WHERE ak.game_round = #{gameRound}) AS aa
+    LEFT JOIN
+    (SELECT
+       market_code code,
+       count(*) total
+     FROM activity_prize_user
+     WHERE game_round = #{gameRound}
+     GROUP BY market_code) ab
+    ON aa.market_code=ab.code
+  )
+  ORDER  BY  aa.id ASC
+  </select>
+
+
+
+
+
+  <select id="queryPrizeCount" resultType="java.lang.Integer" parameterType="java.util.Map" >
+    SELECT ak.count-ifnull(au.total,0) AS COUNT
+FROM
+  (SELECT a.*
+   FROM activity_prize_market a WHERE a.id=#{prizeId}) AS ak
+LEFT JOIN
+  ( SELECT prize_id prizeId,
+           count(prize_id) total
+   FROM activity_prize_user
+   WHERE prize_id=#{prizeId}
+   GROUP BY prize_id) AS au ON ak.id=au.prizeId
+  </select>
+
+  <select id="queryPrizeList" resultMap="BaseResultMap" parameterType="java.util.Map">
+
+    SELECT ak.id,
+           ak.prize_name,
+           ak.prize_url,
+           ak.market_name,
+           ak.market_code,
+           ak.game_round,
+           ak.shop_number,
+           ak.count-ifnull(au.total,0) AS count
+    FROM
+      ( SELECT a.*
+       FROM activity_prize_market a
+
+       <where>
+
+         <if test="marketCode != null" >
+           a.market_code = #{marketCode,jdbcType=VARCHAR}
+         </if>
+
+         <if test="gameRound != null" >
+           AND a.game_round = #{gameRound,jdbcType=VARCHAR}
+         </if>
+
+      </where>
+
+       ) AS ak
+    LEFT JOIN
+      ( SELECT prize_id prizeId,
+               count(prize_id) total
+       FROM activity_prize_user
+       <where>
+         <if test="prizeId != null" >
+           prize_id = #{prizeId,jdbcType=VARCHAR}
+         </if>
+       </where>
+       GROUP BY prize_id ) AS au ON ak.id=au.prizeId
+
+    ORDER BY  ak.id ASC
+
+  </select>
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from activity_prize_market
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from activity_prize_market
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chinaredstar.cms.api.model.ActivityPrizeMarket" >
+    insert into activity_prize_market (id, prize_name, prize_url, 
+      market_name, market_code, count
+      )
+    values (#{id,jdbcType=INTEGER}, #{prizeName,jdbcType=VARCHAR}, #{prizeUrl,jdbcType=VARCHAR}, 
+      #{marketName,jdbcType=VARCHAR}, #{marketCode,jdbcType=VARCHAR}, #{count,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinaredstar.cms.api.model.ActivityPrizeMarket" >
+    insert into activity_prize_market
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="prizeName != null" >
+        prize_name,
+      </if>
+      <if test="prizeUrl != null" >
+        prize_url,
+      </if>
+      <if test="marketName != null" >
+        market_name,
+      </if>
+      <if test="marketCode != null" >
+        market_code,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="prizeName != null" >
+        #{prizeName,jdbcType=VARCHAR},
+      </if>
+      <if test="prizeUrl != null" >
+        #{prizeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="marketName != null" >
+        #{marketName,jdbcType=VARCHAR},
+      </if>
+      <if test="marketCode != null" >
+        #{marketCode,jdbcType=VARCHAR},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinaredstar.cms.api.model.ActivityPrizeMarket" >
+    update activity_prize_market
+    <set >
+      <if test="prizeName != null" >
+        prize_name = #{prizeName,jdbcType=VARCHAR},
+      </if>
+      <if test="prizeUrl != null" >
+        prize_url = #{prizeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="marketName != null" >
+        market_name = #{marketName,jdbcType=VARCHAR},
+      </if>
+      <if test="marketCode != null" >
+        market_code = #{marketCode,jdbcType=VARCHAR},
+      </if>
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinaredstar.cms.api.model.ActivityPrizeMarket" >
+    update activity_prize_market
+    set prize_name = #{prizeName,jdbcType=VARCHAR},
+      prize_url = #{prizeUrl,jdbcType=VARCHAR},
+      market_name = #{marketName,jdbcType=VARCHAR},
+      market_code = #{marketCode,jdbcType=VARCHAR},
+      count = #{count,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

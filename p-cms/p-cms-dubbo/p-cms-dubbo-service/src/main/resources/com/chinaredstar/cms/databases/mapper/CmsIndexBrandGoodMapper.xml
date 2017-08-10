@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinaredstar.cms.mapper.CmsIndexBrandGoodMapper" >
+  <resultMap id="BaseResultMap" type="com.chinaredstar.cms.api.model.CmsIndexBrandGood" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="index_brand_id" property="indexBrandId" jdbcType="INTEGER" />
+    <result column="good_id" property="goodId" jdbcType="VARCHAR" />
+    <result column="good_name" property="goodName" jdbcType="VARCHAR" />
+    <result column="sort_no" property="sortNo" jdbcType="INTEGER" />
+    <result column="editor_id" property="editorId" jdbcType="INTEGER" />
+    <result column="editor_name" property="editorName" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="cover" property="cover" jdbcType="VARCHAR" />
+    <result column="is_recommend" property="isRecommend" jdbcType="BIT" />
+    <result column="recommend_word" property="recommendWord" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, index_brand_id, good_id, good_name, sort_no, editor_id, editor_name, title, cover, is_recommend, recommend_word
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cms_index_brand_good
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cms_index_brand_good
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chinaredstar.cms.api.model.CmsIndexBrandGood" >
+    insert into cms_index_brand_good (id, index_brand_id, good_id, 
+      good_name, sort_no, editor_id, 
+      editor_name, title, cover, is_recommend, recommend_word
+      )
+    values (#{id,jdbcType=INTEGER}, #{indexBrandId,jdbcType=INTEGER}, #{goodId,jdbcType=VARCHAR}, 
+      #{goodName,jdbcType=VARCHAR}, #{sortNo,jdbcType=INTEGER}, #{editorId,jdbcType=INTEGER}, 
+      #{editorName,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{cover,jdbcType=VARCHAR},
+      #{isRecommend,jdbcType=BIT}, #{recommendWord,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinaredstar.cms.api.model.CmsIndexBrandGood" >
+    insert into cms_index_brand_good
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="indexBrandId != null" >
+        index_brand_id,
+      </if>
+      <if test="goodId != null" >
+        good_id,
+      </if>
+      <if test="goodName != null" >
+        good_name,
+      </if>
+      <if test="sortNo != null" >
+        sort_no,
+      </if>
+      <if test="editorId != null" >
+        editor_id,
+      </if>
+      <if test="editorName != null" >
+        editor_name,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="cover != null" >
+        cover,
+      </if>
+      <if test="isRecommend != null" >
+        is_recommend,
+      </if>
+      <if test="recommendWord != null" >
+        recommend_word,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="indexBrandId != null" >
+        #{indexBrandId,jdbcType=INTEGER},
+      </if>
+      <if test="goodId != null" >
+        #{goodId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodName != null" >
+        #{goodName,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNo != null" >
+        #{sortNo,jdbcType=INTEGER},
+      </if>
+      <if test="editorId != null" >
+        #{editorId,jdbcType=INTEGER},
+      </if>
+      <if test="editorName != null" >
+        #{editorName,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="cover != null" >
+        #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="isRecommend != null" >
+        #{isRecommend,jdbcType=BIT},
+      </if>
+      <if test="recommendWord != null" >
+        #{recommendWord,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinaredstar.cms.api.model.CmsIndexBrandGood" >
+    update cms_index_brand_good
+    <set >
+      <if test="indexBrandId != null" >
+        index_brand_id = #{indexBrandId,jdbcType=INTEGER},
+      </if>
+      <if test="goodId != null" >
+        good_id = #{goodId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodName != null" >
+        good_name = #{goodName,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNo != null" >
+        sort_no = #{sortNo,jdbcType=INTEGER},
+      </if>
+      <if test="editorId != null" >
+        editor_id = #{editorId,jdbcType=INTEGER},
+      </if>
+      <if test="editorName != null" >
+        editor_name = #{editorName,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="cover != null" >
+        cover = #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="isRecommend != null" >
+        is_recommend = #{isRecommend,jdbcType=BIT},
+      </if>
+      <if test="recommendWord != null" >
+        recommend_word = #{recommend_word,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinaredstar.cms.api.model.CmsIndexBrandGood" >
+    update cms_index_brand_good
+    set index_brand_id = #{indexBrandId,jdbcType=INTEGER},
+      good_id = #{goodId,jdbcType=VARCHAR},
+      good_name = #{goodName,jdbcType=VARCHAR},
+      sort_no = #{sortNo,jdbcType=INTEGER},
+      editor_id = #{editorId,jdbcType=INTEGER},
+      editor_name = #{editorName,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      cover = #{cover,jdbcType=VARCHAR},
+      is_recommend = #{isRecommend,jdbcType=BIT},
+      recommend_word = #{recommendWord,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

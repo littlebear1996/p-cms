@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaredstar.cms.mapper.CmsCampaignAdvertisementMapper">
+  <resultMap id="BaseResultMap" type="com.chinaredstar.cms.api.model.CmsCampaignAdvertisement">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="campaign_id" jdbcType="INTEGER" property="campaignId" />
+    <result column="advertisement_id" jdbcType="INTEGER" property="advertisementId" />
+    <result column="sequence" jdbcType="INTEGER" property="sequence" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="creator_id" jdbcType="VARCHAR" property="creatorId" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, campaign_id, advertisement_id, sequence, create_time, creator_id, creator
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cms_campaign_advertisement
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cms_campaign_advertisement
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chinaredstar.cms.api.model.CmsCampaignAdvertisement">
+    insert into cms_campaign_advertisement (id, campaign_id, advertisement_id, 
+      sequence, create_time, creator_id, 
+      creator)
+    values (#{id,jdbcType=INTEGER}, #{campaignId,jdbcType=INTEGER}, #{advertisementId,jdbcType=INTEGER}, 
+      #{sequence,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{creatorId,jdbcType=VARCHAR}, 
+      #{creator,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinaredstar.cms.api.model.CmsCampaignAdvertisement">
+    insert into cms_campaign_advertisement
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="campaignId != null">
+        campaign_id,
+      </if>
+      <if test="advertisementId != null">
+        advertisement_id,
+      </if>
+      <if test="sequence != null">
+        sequence,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="campaignId != null">
+        #{campaignId,jdbcType=INTEGER},
+      </if>
+      <if test="advertisementId != null">
+        #{advertisementId,jdbcType=INTEGER},
+      </if>
+      <if test="sequence != null">
+        #{sequence,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinaredstar.cms.api.model.CmsCampaignAdvertisement">
+    update cms_campaign_advertisement
+    <set>
+      <if test="campaignId != null">
+        campaign_id = #{campaignId,jdbcType=INTEGER},
+      </if>
+      <if test="advertisementId != null">
+        advertisement_id = #{advertisementId,jdbcType=INTEGER},
+      </if>
+      <if test="sequence != null">
+        sequence = #{sequence,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinaredstar.cms.api.model.CmsCampaignAdvertisement">
+    update cms_campaign_advertisement
+    set campaign_id = #{campaignId,jdbcType=INTEGER},
+      advertisement_id = #{advertisementId,jdbcType=INTEGER},
+      sequence = #{sequence,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      creator_id = #{creatorId,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

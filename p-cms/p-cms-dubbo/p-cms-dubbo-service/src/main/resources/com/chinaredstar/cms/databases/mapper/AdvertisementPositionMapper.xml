@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaredstar.cms.mapper.AdvertisementPositionMapper">
+
+  <select id="getAdvertisementPositionByCode" parameterType="java.lang.String" resultType="AdvertisementPosition">
+    SELECT
+      id, position_code, position_name, position_type, position_desc, parent_name, title
+    FROM cms_advertisement_position
+    WHERE position_code = #{code}
+  </select>
+</mapper>

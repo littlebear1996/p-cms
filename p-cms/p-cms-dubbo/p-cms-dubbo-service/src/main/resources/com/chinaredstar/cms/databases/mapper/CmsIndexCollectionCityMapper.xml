@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinaredstar.cms.mapper.CmsIndexCollectionCityMapper" >
+  <resultMap id="BaseResultMap" type="com.chinaredstar.cms.api.model.CmsIndexCollectionCity" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="collection_id" property="collectionId" jdbcType="INTEGER" />
+    <result column="city_id" property="cityId" jdbcType="VARCHAR" />
+    <result column="city_name" property="cityName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, collection_id, city_id, city_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cms_index_collection_city
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cms_index_collection_city
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chinaredstar.cms.api.model.CmsIndexCollectionCity" >
+    insert into cms_index_collection_city (id, collection_id, city_id,
+      city_name)
+    values (#{id,jdbcType=INTEGER}, #{collectionId,jdbcType=INTEGER}, #{cityId,jdbcType=VARCHAR},
+      #{cityName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinaredstar.cms.api.model.CmsIndexCollectionCity" >
+    insert into cms_index_collection_city
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="collectionId != null" >
+        collection_id,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="cityName != null" >
+        city_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="collectionId != null" >
+        #{collectionId,jdbcType=INTEGER},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null" >
+        #{cityName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinaredstar.cms.api.model.CmsIndexCollectionCity" >
+    update cms_index_collection_city
+    <set >
+      <if test="collectionId != null" >
+        collection_id = #{collectionId,jdbcType=INTEGER},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=VARCHAR},
+      </if>
+      <if test="cityName != null" >
+        city_name = #{cityName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinaredstar.cms.api.model.CmsIndexCollectionCity" >
+    update cms_index_collection_city
+    set collection_id = #{collectionId,jdbcType=INTEGER},
+      city_id = #{cityId,jdbcType=VARCHAR},
+      city_name = #{cityName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

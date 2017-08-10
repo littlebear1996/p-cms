@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinaredstar.cms.mapper.CmsIndexAdvertisementMapper" >
+  <resultMap id="BaseResultMap" type="com.chinaredstar.cms.api.model.CmsIndexAdvertisement" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="creator_id" property="creatorId" jdbcType="INTEGER" />
+    <result column="creator_name" property="creatorName" jdbcType="VARCHAR" />
+    <result column="updater_id" property="updaterId" jdbcType="INTEGER" />
+    <result column="updater_name" property="updaterName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="position_id" property="positionId" jdbcType="INTEGER" />
+    <result column="sequence" property="sequence" jdbcType="INTEGER" />
+    <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+    <result column="check_status" property="checkStatus" jdbcType="INTEGER" />
+    <result column="reject_cause" property="rejectCause" jdbcType="VARCHAR" />
+    <result column="is_online" property="isOnline" jdbcType="BIT" />
+    <result column="view_count" property="viewCount" jdbcType="INTEGER" />
+    <result column="agree_count" property="agreeCount" jdbcType="INTEGER" />
+    <result column="link_url" property="linkUrl" jdbcType="VARCHAR" />
+    <result column="is_home" property="isHome" jdbcType="INTEGER" />
+    <result column="is_shop" property="isShop" jdbcType="INTEGER" />
+    <result column="link_type" property="linkType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, title, description, creator_id, creator_name, updater_id, updater_name, create_time, 
+    start_time, end_time, position_id, sequence, img_url, check_status, reject_cause, 
+    is_online, view_count, agree_count, link_url, is_home, is_shop, link_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cms_index_advertisement
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cms_index_advertisement
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chinaredstar.cms.api.model.CmsIndexAdvertisement" >
+    insert into cms_index_advertisement (id, title, description, 
+      creator_id, creator_name, updater_id, 
+      updater_name, create_time, start_time, 
+      end_time, position_id, sequence, 
+      img_url, check_status, reject_cause, 
+      is_online, view_count, agree_count, 
+      link_url, is_home, is_shop, 
+      link_type)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{creatorId,jdbcType=INTEGER}, #{creatorName,jdbcType=VARCHAR}, #{updaterId,jdbcType=INTEGER}, 
+      #{updaterName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{positionId,jdbcType=INTEGER}, #{sequence,jdbcType=INTEGER}, 
+      #{imgUrl,jdbcType=VARCHAR}, #{checkStatus,jdbcType=INTEGER}, #{rejectCause,jdbcType=VARCHAR}, 
+      #{isOnline,jdbcType=BIT}, #{viewCount,jdbcType=INTEGER}, #{agreeCount,jdbcType=INTEGER}, 
+      #{linkUrl,jdbcType=VARCHAR}, #{isHome,jdbcType=INTEGER}, #{isShop,jdbcType=INTEGER}, 
+      #{linkType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinaredstar.cms.api.model.CmsIndexAdvertisement" >
+    insert into cms_index_advertisement
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="creatorId != null" >
+        creator_id,
+      </if>
+      <if test="creatorName != null" >
+        creator_name,
+      </if>
+      <if test="updaterId != null" >
+        updater_id,
+      </if>
+      <if test="updaterName != null" >
+        updater_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="positionId != null" >
+        position_id,
+      </if>
+      <if test="sequence != null" >
+        sequence,
+      </if>
+      <if test="imgUrl != null" >
+        img_url,
+      </if>
+      <if test="checkStatus != null" >
+        check_status,
+      </if>
+      <if test="rejectCause != null" >
+        reject_cause,
+      </if>
+      <if test="isOnline != null" >
+        is_online,
+      </if>
+      <if test="viewCount != null" >
+        view_count,
+      </if>
+      <if test="agreeCount != null" >
+        agree_count,
+      </if>
+      <if test="linkUrl != null" >
+        link_url,
+      </if>
+      <if test="isHome != null" >
+        is_home,
+      </if>
+      <if test="isShop != null" >
+        is_shop,
+      </if>
+      <if test="linkType != null" >
+        link_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creatorName != null" >
+        #{creatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="updaterId != null" >
+        #{updaterId,jdbcType=INTEGER},
+      </if>
+      <if test="updaterName != null" >
+        #{updaterName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="positionId != null" >
+        #{positionId,jdbcType=INTEGER},
+      </if>
+      <if test="sequence != null" >
+        #{sequence,jdbcType=INTEGER},
+      </if>
+      <if test="imgUrl != null" >
+        #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="checkStatus != null" >
+        #{checkStatus,jdbcType=INTEGER},
+      </if>
+      <if test="rejectCause != null" >
+        #{rejectCause,jdbcType=VARCHAR},
+      </if>
+      <if test="isOnline != null" >
+        #{isOnline,jdbcType=BIT},
+      </if>
+      <if test="viewCount != null" >
+        #{viewCount,jdbcType=INTEGER},
+      </if>
+      <if test="agreeCount != null" >
+        #{agreeCount,jdbcType=INTEGER},
+      </if>
+      <if test="linkUrl != null" >
+        #{linkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="isHome != null" >
+        #{isHome,jdbcType=INTEGER},
+      </if>
+      <if test="isShop != null" >
+        #{isShop,jdbcType=INTEGER},
+      </if>
+      <if test="linkType != null" >
+        #{linkType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinaredstar.cms.api.model.CmsIndexAdvertisement" >
+    update cms_index_advertisement
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null" >
+        creator_id = #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creatorName != null" >
+        creator_name = #{creatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="updaterId != null" >
+        updater_id = #{updaterId,jdbcType=INTEGER},
+      </if>
+      <if test="updaterName != null" >
+        updater_name = #{updaterName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="positionId != null" >
+        position_id = #{positionId,jdbcType=INTEGER},
+      </if>
+      <if test="sequence != null" >
+        sequence = #{sequence,jdbcType=INTEGER},
+      </if>
+      <if test="imgUrl != null" >
+        img_url = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="checkStatus != null" >
+        check_status = #{checkStatus,jdbcType=INTEGER},
+      </if>
+      <if test="rejectCause != null" >
+        reject_cause = #{rejectCause,jdbcType=VARCHAR},
+      </if>
+      <if test="isOnline != null" >
+        is_online = #{isOnline,jdbcType=BIT},
+      </if>
+      <if test="viewCount != null" >
+        view_count = #{viewCount,jdbcType=INTEGER},
+      </if>
+      <if test="agreeCount != null" >
+        agree_count = #{agreeCount,jdbcType=INTEGER},
+      </if>
+      <if test="linkUrl != null" >
+        link_url = #{linkUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="isHome != null" >
+        is_home = #{isHome,jdbcType=INTEGER},
+      </if>
+      <if test="isShop != null" >
+        is_shop = #{isShop,jdbcType=INTEGER},
+      </if>
+      <if test="linkType != null" >
+        link_type = #{linkType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinaredstar.cms.api.model.CmsIndexAdvertisement" >
+    update cms_index_advertisement
+    set title = #{title,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      creator_id = #{creatorId,jdbcType=INTEGER},
+      creator_name = #{creatorName,jdbcType=VARCHAR},
+      updater_id = #{updaterId,jdbcType=INTEGER},
+      updater_name = #{updaterName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      position_id = #{positionId,jdbcType=INTEGER},
+      sequence = #{sequence,jdbcType=INTEGER},
+      img_url = #{imgUrl,jdbcType=VARCHAR},
+      check_status = #{checkStatus,jdbcType=INTEGER},
+      reject_cause = #{rejectCause,jdbcType=VARCHAR},
+      is_online = #{isOnline,jdbcType=BIT},
+      view_count = #{viewCount,jdbcType=INTEGER},
+      agree_count = #{agreeCount,jdbcType=INTEGER},
+      link_url = #{linkUrl,jdbcType=VARCHAR},
+      is_home = #{isHome,jdbcType=INTEGER},
+      is_shop = #{isShop,jdbcType=INTEGER},
+      link_type = #{linkType,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="listADsByPositionCodeAndCityId" resultType="com.chinaredstar.cms.api.vo.index.IndexAdvertisementVo">
+    SELECT
+      DISTINCT(ad.id),ad.*
+    FROM
+	  cms_index_advertisement ad
+    LEFT JOIN cms_advertisement_position ad_position ON ad.position_id = ad_position.id
+    LEFT JOIN cms_index_advertisement_city city ON ad.id = city.advertisement_id
+    WHERE
+        #{currentTime,jdbcType=TIMESTAMP} BETWEEN start_time AND end_time
+        AND check_status = 1
+        AND is_online = 1
+        AND ad_position.position_code = #{positionCode,jdbcType=VARCHAR}
+        AND city.city_id = #{cityId,jdbcType=VARCHAR}
+        <if test="shop != null">
+          AND is_shop = ${shop}
+        </if>
+        <if test="home != null">
+          AND is_home = ${home}
+        </if>
+        <if test="sequence != null">
+          AND sequence = #{sequence,jdbcType=INTEGER}
+        </if>
+    ORDER BY sequence
+  </select>
+  <select id="getOnlineAdvertisement" resultType="com.chinaredstar.cms.api.vo.index.IndexAdvertisementVo">
+    SELECT
+    <include refid="Base_Column_List"/>
+    from cms_index_advertisement
+    WHERE
+    #{currentTime,jdbcType=TIMESTAMP} BETWEEN start_time AND end_time
+    AND check_status = 1
+    AND is_online = 1
+    ORDER  BY sequence ASC,start_time ASC ,create_time ASC
+  </select>
+  <update id="batchOfflineByAdList" >
+    UPDATE cms_index_advertisement
+    SET is_online = 0
+    WHERE id IN
+    <foreach collection="idList" item="id" open="(" close=")" index="index" separator=",">
+      #{id}
+    </foreach>
+  </update>
+
+  <select id="getAdvertisementDetailById" resultType="com.chinaredstar.cms.api.vo.index.IndexAdvertisementVo">
+    SELECT
+    <include refid="Base_Column_List"/>
+    ,
+    link_content
+    from cms_index_advertisement
+    WHERE
+    id = #{id,jdbcType=INTEGER}
+    AND check_status = 1
+    AND is_online = 1
+  </select>
+</mapper>

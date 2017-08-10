@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaredstar.cms.mapper.AtlasMapper">
+    <resultMap id="BaseResultMap" type="com.chinaredstar.cms.api.vo.atlas.AtlasVo">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="sub_type" jdbcType="INTEGER" property="subType"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="input_tags" jdbcType="VARCHAR" property="categoryTags"/>
+        <result column="tags" jdbcType="VARCHAR" property="tags"/>
+        <result column="cover_img_url" jdbcType="VARCHAR" property="coverImgUrl"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="agree_count" jdbcType="INTEGER" property="agreeCount"/>
+        <result column="view_count" jdbcType="INTEGER" property="viewCount"/>
+        <result column="designerId" jdbcType="VARCHAR" property="designerId"/>
+        <result column="caseId" jdbcType="VARCHAR" property="caseId"/>
+        <result column="count" jdbcType="INTEGER" property="count"/>
+        <result column="openId" jdbcType="VARCHAR" property="openId"/>
+        <result column="obj_type" jdbcType="INTEGER" property="objType"/>
+        <result column="obj_value" jdbcType="VARCHAR" property="objValue"/>
+        <association property="atlasDetails" jdbcType="BIGINT" column="id"
+                     select="com.chinaredstar.cms.mapper.AtlasDetailMapper.findByAtlasId"/>
+    </resultMap>
+
+    <resultMap id="ResultMap" type="com.chinaredstar.cms.api.vo.atlas.AtlasVo">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="sub_type" jdbcType="INTEGER" property="subType"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="input_tags" jdbcType="VARCHAR" property="categoryTags"/>
+        <result column="tags" jdbcType="VARCHAR" property="tags"/>
+        <result column="cover_img_url" jdbcType="VARCHAR" property="coverImgUrl"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="agree_count" jdbcType="INTEGER" property="agreeCount"/>
+        <result column="view_count" jdbcType="INTEGER" property="viewCount"/>
+        <result column="designerId" jdbcType="VARCHAR" property="designerId"/>
+        <result column="caseId" jdbcType="VARCHAR" property="caseId"/>
+        <result column="count" jdbcType="INTEGER" property="count"/>
+        <result column="openId" jdbcType="VARCHAR" property="openId"/>
+        <result column="obj_type" jdbcType="INTEGER" property="objType"/>
+        <result column="obj_value" jdbcType="VARCHAR" property="objValue"/>
+        <result column="obj_uuid" jdbcType="VARCHAR" property="objUuid"/>
+    </resultMap>
+    <sql id="select_sql">
+        atlas.id id,atlas.creator_id creator_id,atlas.creator_name creator_name,atlas.type type,atlas.sub_type sub_type,atlas.title title,atlas.description description,
+        atlas.input_tags input_tags,atlas.tags tags, atlas.cover_img_url cover_img_url,atlas.create_time create_time,atlas.reviewer_id reviewer_id,atlas.agree_count agree_count,
+        atlas.view_count view_count,atlas.designerId designerId,atlas.caseId caseId,atlas.openId openId,atlas.editer_id editer_id,atlas.editer_name editer_name, obj_type, obj_value
+        ,obj_uuid
+    </sql>
+    <select id="listByType" parameterType="com.chinaredstar.cms.api.vo.atlas.AtlasQueryVo" resultMap="ResultMap">
+        SELECT
+        <include refid="select_sql"/>,
+        (SELECT count(*) from cms_atlas_detail atlas_detail WHERE atlas_detail.atlas_id = atlas.id) count
+        FROM cms_atlas atlas
+        WHERE 1 = 1
+        <if test="subType != null">
+            AND atlas.sub_type = #{subType,jdbcType=INTEGER}
+        </if>
+
+        AND atlas.check_status = 1
+        AND atlas.is_online = 1
+        <if test="isRecommand != null and isRecommand == true">
+            AND atlas.is_recommand = 1
+        </if>
+        <if test="isTop != null and isTop == true">
+            AND atlas.is_top = 1
+        </if>
+
+        <if test="orderBy != null">
+            order by ${orderBy}
+        </if>
+
+
+        <if test="pageIndex != null and pageSize != null">
+            limit #{pageIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <select id="getAtlasByIds" resultMap="ResultMap">
+        SELECT
+        <include refid="select_sql"/>,
+        (SELECT count(*) from cms_atlas_detail atlas_detail WHERE atlas_detail.atlas_id = atlas.id) count
+        FROM cms_atlas atlas
+        WHERE atlas.check_status = 1
+        AND atlas.is_online = 1
+        AND atlas.id IN
+        <foreach collection="list" item="id" open="(" close=")" separator="," index="index">
+            #{id}
+        </foreach>
+        ORDER BY atlas.is_top DESC ,atlas.set_top_time DESC ,atlas.create_time DESC
+    </select>
+
+    <select id="getDetailById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        <include refid="select_sql"/>,
+        (SELECT count(*) from cms_atlas_detail atlas_detail WHERE atlas_detail.atlas_id = atlas.id) count
+        FROM cms_atlas atlas
+        WHERE 1=1
+        AND id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <insert id="insert" parameterType="com.chinaredstar.cms.api.vo.atlas.AtlasVo" useGeneratedKeys="true" keyProperty="id">
+        insert into cms_atlas
+        (type,sub_type,title,description,input_tags,cover_img_url,create_time, caseId,designerId,openId,check_status,tags, obj_type, obj_value,obj_uuid)
+        values(
+         #{type,jdbcType=INTEGER},#{subType,jdbcType=INTEGER},#{title,jdbcType=VARCHAR},#{description,jdbcType=VARCHAR},
+         #{categoryTags,jdbcType=VARCHAR},#{coverImgUrl,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},
+         #{caseId,jdbcType=VARCHAR},#{designerId,jdbcType=VARCHAR},#{openId,jdbcType=VARCHAR},0,#{tags,jdbcType=VARCHAR},
+         #{objType, jdbcType=INTEGER}, #{objValue, jdbcType=VARCHAR},#{objUuid, jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <delete id="delete" >
+        DELETE FROM cms_atlas
+        WHERE designerId = #{designerId,jdbcType=VARCHAR}
+        AND caseId = #{caseId,jdbcType=VARCHAR}
+        AND openId = #{openId,jdbcType=VARCHAR}
+
+    </delete>
+
+    <select id="getAtlasByDesignerCaseId" resultMap="ResultMap" >
+        SELECT
+        <include refid="select_sql"/>
+        FROM cms_atlas atlas
+        WHERE atlas.designerId = #{designerId,jdbcType=VARCHAR}
+        AND atlas.caseId = #{caseId,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteAtlasByVo" parameterType="com.chinaredstar.cms.api.vo.atlas.AtlasVo">
+        DELETE FROM cms_atlas
+        WHERE 1=1
+        <if test="objType != null">
+            AND obj_type = #{objType,jdbcType=INTEGER}
+        </if>
+        <if test="objValue != null">
+            AND obj_value = #{objValue,jdbcType=VARCHAR}
+        </if>
+        <if test="objUuid != null">
+            AND obj_uuid = #{objUuid,jdbcType=VARCHAR}
+        </if>
+    </delete>
+
+    <select id="getAllIdsByType" resultType="java.lang.Integer">
+        SELECT id
+        FROM cms_atlas
+        WHERE type = #{type}
+    </select>
+    <update id="updateViewCountById" parameterType="java.lang.Integer">
+        UPDATE cms_atlas set view_count = #{viewCount}
+        WHERE id = #{id}
+    </update>
+</mapper>

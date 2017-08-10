@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaredstar.cms.mapper.ArticleCustomMapper">
+  <resultMap id="BaseResultMap" type="com.chinaredstar.cms.api.vo.article.ArticleCustomVo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="sub_title" jdbcType="VARCHAR" property="subTitle" />
+    <result column="category_tags" jdbcType="VARCHAR" property="categoryTags" />
+    <result column="cover_img_url" jdbcType="VARCHAR" property="coverImgUrl" />
+    <result column="tags" jdbcType="VARCHAR" property="tags" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.chinaredstar.cms.api.vo.article.ArticleCustomVo">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, title, sub_title, category_tags, cover_img_url,tags
+  </sql>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cms_article_custom
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cms_article_custom
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chinaredstar.cms.api.model.ArticleCustom">
+    insert into cms_article_custom (id, title, sub_title, 
+      category_tags, tags, cover_img_url, 
+      create_time, update_time, check_status, 
+      creator_id, reject_cause, is_top, 
+      is_recommand, is_online, start_time, 
+      end_time, content)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{subTitle,jdbcType=VARCHAR}, 
+      #{categoryTags,jdbcType=VARCHAR}, #{tags,jdbcType=VARCHAR}, #{coverImgUrl,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{checkStatus,jdbcType=INTEGER}, 
+      #{creatorId,jdbcType=INTEGER}, #{rejectCause,jdbcType=VARCHAR}, #{isTop,jdbcType=BIT}, 
+      #{isRecommand,jdbcType=BIT}, #{isOnline,jdbcType=BIT}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinaredstar.cms.api.model.ArticleCustom">
+    insert into cms_article_custom
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="subTitle != null">
+        sub_title,
+      </if>
+      <if test="categoryTags != null">
+        category_tags,
+      </if>
+      <if test="tags != null">
+        tags,
+      </if>
+      <if test="coverImgUrl != null">
+        cover_img_url,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="checkStatus != null">
+        check_status,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="rejectCause != null">
+        reject_cause,
+      </if>
+      <if test="isTop != null">
+        is_top,
+      </if>
+      <if test="isRecommand != null">
+        is_recommand,
+      </if>
+      <if test="isOnline != null">
+        is_online,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="subTitle != null">
+        #{subTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryTags != null">
+        #{categoryTags,jdbcType=VARCHAR},
+      </if>
+      <if test="tags != null">
+        #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="coverImgUrl != null">
+        #{coverImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkStatus != null">
+        #{checkStatus,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="rejectCause != null">
+        #{rejectCause,jdbcType=VARCHAR},
+      </if>
+      <if test="isTop != null">
+        #{isTop,jdbcType=BIT},
+      </if>
+      <if test="isRecommand != null">
+        #{isRecommand,jdbcType=BIT},
+      </if>
+      <if test="isOnline != null">
+        #{isOnline,jdbcType=BIT},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinaredstar.cms.api.model.ArticleCustom">
+    update cms_article_custom
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="subTitle != null">
+        sub_title = #{subTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryTags != null">
+        category_tags = #{categoryTags,jdbcType=VARCHAR},
+      </if>
+      <if test="tags != null">
+        tags = #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="coverImgUrl != null">
+        cover_img_url = #{coverImgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkStatus != null">
+        check_status = #{checkStatus,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="rejectCause != null">
+        reject_cause = #{rejectCause,jdbcType=VARCHAR},
+      </if>
+      <if test="isTop != null">
+        is_top = #{isTop,jdbcType=BIT},
+      </if>
+      <if test="isRecommand != null">
+        is_recommand = #{isRecommand,jdbcType=BIT},
+      </if>
+      <if test="isOnline != null">
+        is_online = #{isOnline,jdbcType=BIT},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinaredstar.cms.api.model.ArticleCustom">
+    update cms_article_custom
+    set title = #{title,jdbcType=VARCHAR},
+      sub_title = #{subTitle,jdbcType=VARCHAR},
+      category_tags = #{categoryTags,jdbcType=VARCHAR},
+      tags = #{tags,jdbcType=VARCHAR},
+      cover_img_url = #{coverImgUrl,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      check_status = #{checkStatus,jdbcType=INTEGER},
+      creator_id = #{creatorId,jdbcType=INTEGER},
+      reject_cause = #{rejectCause,jdbcType=VARCHAR},
+      is_top = #{isTop,jdbcType=BIT},
+      is_recommand = #{isRecommand,jdbcType=BIT},
+      is_online = #{isOnline,jdbcType=BIT},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinaredstar.cms.api.model.ArticleCustom">
+    update cms_article_custom
+    set title = #{title,jdbcType=VARCHAR},
+      sub_title = #{subTitle,jdbcType=VARCHAR},
+      category_tags = #{categoryTags,jdbcType=VARCHAR},
+      tags = #{tags,jdbcType=VARCHAR},
+      cover_img_url = #{coverImgUrl,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      check_status = #{checkStatus,jdbcType=INTEGER},
+      creator_id = #{creatorId,jdbcType=INTEGER},
+      reject_cause = #{rejectCause,jdbcType=VARCHAR},
+      is_top = #{isTop,jdbcType=BIT},
+      is_recommand = #{isRecommand,jdbcType=BIT},
+      is_online = #{isOnline,jdbcType=BIT},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getArticleCustomListByIds" resultType="ArticleCustomVo">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM cms_article_custom
+    WHERE id IN
+    <foreach collection="list" item="id" open="(" close=")" index="index" separator=",">
+      #{id}
+    </foreach>
+    and is_online = 1 and check_status = 1
+  </select>
+  <select id="getDetailById" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs" >
+    SELECT
+    <include refid="Base_Column_List" />,
+    <include refid="Blob_Column_List" />
+    FROM cms_article_custom
+    WHERE  1 =1
+    AND id = #{id.jdbcType=INTEGER}
+  </select>
+  <select id="getAllIds" resultType="java.lang.Integer">
+    SELECT id
+    FROM  cms_article_custom
+  </select>
+  <update id="updateViewCountById" parameterType="java.lang.Integer">
+    UPDATE cms_article_custom set view_count = #{viewCount}
+    WHERE id = #{id}
+  </update>
+</mapper>

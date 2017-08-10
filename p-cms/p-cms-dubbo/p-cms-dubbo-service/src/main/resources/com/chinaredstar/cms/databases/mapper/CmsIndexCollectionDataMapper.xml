@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinaredstar.cms.mapper.CmsIndexCollectionDataMapper" >
+  <resultMap id="BaseResultMap" type="com.chinaredstar.cms.api.model.CmsIndexCollectionData" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="collection_id" property="collectionId" jdbcType="BIGINT" />
+    <result column="target_id" property="targetId" jdbcType="VARCHAR" />
+    <result column="sort_no" property="sortNo" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, collection_id, target_id, sort_no, create_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from cms_index_collection_data
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cms_index_collection_data
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.chinaredstar.cms.api.model.CmsIndexCollectionData" >
+    insert into cms_index_collection_data (id, collection_id, target_id, 
+      sort_no, create_time)
+    values (#{id,jdbcType=BIGINT}, #{collectionId,jdbcType=BIGINT}, #{targetId,jdbcType=VARCHAR}, 
+      #{sortNo,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinaredstar.cms.api.model.CmsIndexCollectionData" >
+    insert into cms_index_collection_data
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="collectionId != null" >
+        collection_id,
+      </if>
+      <if test="targetId != null" >
+        target_id,
+      </if>
+      <if test="sortNo != null" >
+        sort_no,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="collectionId != null" >
+        #{collectionId,jdbcType=BIGINT},
+      </if>
+      <if test="targetId != null" >
+        #{targetId,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNo != null" >
+        #{sortNo,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinaredstar.cms.api.model.CmsIndexCollectionData" >
+    update cms_index_collection_data
+    <set >
+      <if test="collectionId != null" >
+        collection_id = #{collectionId,jdbcType=BIGINT},
+      </if>
+      <if test="targetId != null" >
+        target_id = #{targetId,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNo != null" >
+        sort_no = #{sortNo,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinaredstar.cms.api.model.CmsIndexCollectionData" >
+    update cms_index_collection_data
+    set collection_id = #{collectionId,jdbcType=BIGINT},
+      target_id = #{targetId,jdbcType=VARCHAR},
+      sort_no = #{sortNo,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findByCollectionId" resultType="com.chinaredstar.cms.api.vo.index.IndexCollectionDataVo">
+    select
+    cicd.id, cicd.collection_id, cicd.target_id, cicd.sort_no, cicd.create_time, cicd.sort_no
+    from cms_index_collection_data cicd
+    where collection_id = #{collectionId}
+    ORDER BY sort_no ASC, create_time DESC
+  </select>
+
+  <select id="findByCollectionIds" resultType="com.chinaredstar.cms.api.vo.index.IndexCollectionDataVo">
+    select
+    cicd.id, cicd.collection_id, cicd.target_id, cicd.sort_no, cicd.create_time
+    from cms_index_collection_data cicd
+    where collection_id IN
+    <foreach collection="collectionIds" index="index" item="id" open="(" close=")" separator=",">
+      #{id}
+    </foreach>
+    ORDER BY sort_no ASC, create_time DESC
+  </select>
+</mapper>

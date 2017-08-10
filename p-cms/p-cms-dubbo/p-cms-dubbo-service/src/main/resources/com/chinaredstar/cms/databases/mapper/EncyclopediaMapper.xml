@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaredstar.cms.mapper.EncyclopediaMapper">
+    <resultMap id="BaseResultMap" type="com.chinaredstar.cms.api.vo.encyclopedia.EncyclopediaVo">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="creater_id" jdbcType="BIGINT" property="createrId"/>
+        <result column="creater_name" jdbcType="VARCHAR" property="createrName"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="sub_title" jdbcType="VARCHAR" property="subTitle"/>
+        <result column="tags" jdbcType="VARCHAR" property="tags"/>
+        <result column="cover" jdbcType="VARCHAR" property="cover"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="reviewer_id" jdbcType="BIGINT" property="reviewerId"/>
+        <result column="agree_count" jdbcType="INTEGER" property="agreeCount"/>
+        <result column="view_count" jdbcType="INTEGER" property="viewCount"/>
+        <result column="context" jdbcType="LONGVARCHAR" property="context"/>
+        <result column="editer_id" jdbcType="BIGINT" property="editerId"/>
+        <result column="editer_name" jdbcType="VARCHAR" property="editerName"/>
+    </resultMap>
+    <sql id="BaseColumn">
+        id,creater_id,creater_name,type,title,sub_title,tags,cover,create_time,reviewer_id,agree_count,view_count,editer_id,editer_name
+    </sql>
+    <sql id="Blob_Column_List">
+        context
+    </sql>
+    <select id="listByType" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BaseColumn"/>
+        FROM cms_encyclopedia
+        WHERE 1 = 1
+        AND status = 1
+        AND isonline = 1
+        AND type = #{type,jdbcType=INTEGER}
+        <if test="isRecommand != null">
+            AND set_recom_flg = #{isRecommand,jdbcType = BIT}
+        </if>
+
+            ORDER BY set_top_flg desc,  set_top_time DESC , create_time DESC
+
+        <if test="isRecommand != null and isTop == null">
+            ORDER BY set_recommand_time DESC , create_time DESC
+        </if>
+        <if test="pageIndex != null and pageSize != null">
+            LIMIT #{pageIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+        </if>
+
+    </select>
+
+    <select id="getDetailById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BaseColumn"/>,
+        <include refid="Blob_Column_List"/>
+        FROM cms_encyclopedia
+        WHERE id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="getEncyclopediaListByIds" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BaseColumn"/>
+        FROM cms_encyclopedia
+        WHERE id IN
+        <foreach collection="list" open="(" close=")" index="index" item="id" separator=",">
+            #{id}
+        </foreach>
+    </select>
+    <select id="getEncyclopediaListByTags" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BaseColumn"/>,
+        <include refid="Blob_Column_List"/>
+        FROM cms_encyclopedia
+        WHERE 1 = 1
+        AND tags = #{tags,jdbcType=VARCHAR}
+    </select>
+
+</mapper>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinaredstar.cms.mapper.ActivityPrizeUserMapper" >
+  <resultMap id="BaseResultMap" type="com.chinaredstar.cms.api.model.ActivityPrizeUser" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="prize_id" property="prizeId" jdbcType="INTEGER" />
+    <result column="open_id" property="openId" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="market_code" property="marketCode" jdbcType="VARCHAR" />
+    <result column="game_round" property="gameRound" jdbcType="INTEGER" />
+  </resultMap>
+
+
+  <sql id="Base_Column_List" >
+    id, prize_id, open_id, mobile,market_code,game_round
+  </sql>
+
+  <select id="queryUserPrize" resultType="java.lang.Integer" parameterType="java.util.Map">
+      SELECT  COUNT(*) FROM  activity_prize_user
+        <where>
+          <if test="openId != null">
+            open_id=#{openId,jdbcType=VARCHAR}
+          </if>
+          <if test="prizeId != null">
+            AND prize_id=#{prizeId,jdbcType=VARCHAR}
+          </if>
+          <if test="gameRound != null">
+            AND game_round=#{gameRound,jdbcType=INTEGER}
+          </if>
+          <if test="marketCode != null">
+            AND market_code=#{marketCode,jdbcType=VARCHAR}
+          </if>
+       </where>
+  </select>
+
+  <select id="queryPrizeCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+    SELECT  COUNT(*) FROM  activity_prize_user
+    <where>
+      <if test="marketCode != null">
+        market_code=#{marketCode,jdbcType=VARCHAR}
+      </if>
+      <if test="gameRound != null">
+        AND game_round=#{gameRound,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </select>
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from activity_prize_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from activity_prize_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chinaredstar.cms.api.model.ActivityPrizeUser" >
+    insert into activity_prize_user (id, prize_id, open_id, 
+      mobile)
+    values (#{id,jdbcType=INTEGER}, #{prizeId,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinaredstar.cms.api.model.ActivityPrizeUser" >
+    insert into activity_prize_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="prizeId != null" >
+        prize_id,
+      </if>
+      <if test="openId != null" >
+        open_id,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="marketCode != null" >
+        market_code,
+      </if>
+      <if test="gameRound != null" >
+        game_round,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="prizeId != null" >
+        #{prizeId,jdbcType=INTEGER},
+      </if>
+      <if test="openId != null" >
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="marketCode != null" >
+        #{marketCode,jdbcType=VARCHAR},
+      </if>
+      <if test="gameRound != null" >
+        #{gameRound,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinaredstar.cms.api.model.ActivityPrizeUser" >
+    update activity_prize_user
+    <set >
+      <if test="prizeId != null" >
+        prize_id = #{prizeId,jdbcType=INTEGER},
+      </if>
+      <if test="openId != null" >
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinaredstar.cms.api.model.ActivityPrizeUser" >
+    update activity_prize_user
+    set prize_id = #{prizeId,jdbcType=INTEGER},
+      open_id = #{openId,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

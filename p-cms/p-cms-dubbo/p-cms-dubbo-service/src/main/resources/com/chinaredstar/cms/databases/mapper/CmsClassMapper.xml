@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaredstar.cms.mapper.CmsClassMapper">
+  <resultMap id="BaseResultMap" type="com.chinaredstar.cms.api.model.CmsClass">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sequence" jdbcType="INTEGER" property="sequence" />
+    <result column="datas" jdbcType="VARCHAR" property="datas" />
+    <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_top" jdbcType="BIT" property="isTop" />
+    <result column="check_status" jdbcType="INTEGER" property="checkStatus" />
+    <result column="reject_cause" jdbcType="VARCHAR" property="rejectCause" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, sequence, datas, creator_id, create_time, update_time, is_top, check_status, 
+    reject_cause, type
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cms_class
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cms_class
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chinaredstar.cms.api.model.CmsClass">
+    insert into cms_class (id, sequence, datas, 
+      creator_id, create_time, update_time, 
+      is_top, check_status, reject_cause, 
+      type)
+    values (#{id,jdbcType=INTEGER}, #{sequence,jdbcType=INTEGER}, #{datas,jdbcType=VARCHAR}, 
+      #{creatorId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{isTop,jdbcType=BIT}, #{checkStatus,jdbcType=INTEGER}, #{rejectCause,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinaredstar.cms.api.model.CmsClass">
+    insert into cms_class
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="sequence != null">
+        sequence,
+      </if>
+      <if test="datas != null">
+        datas,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="isTop != null">
+        is_top,
+      </if>
+      <if test="checkStatus != null">
+        check_status,
+      </if>
+      <if test="rejectCause != null">
+        reject_cause,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sequence != null">
+        #{sequence,jdbcType=INTEGER},
+      </if>
+      <if test="datas != null">
+        #{datas,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isTop != null">
+        #{isTop,jdbcType=BIT},
+      </if>
+      <if test="checkStatus != null">
+        #{checkStatus,jdbcType=INTEGER},
+      </if>
+      <if test="rejectCause != null">
+        #{rejectCause,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinaredstar.cms.api.model.CmsClass">
+    update cms_class
+    <set>
+      <if test="sequence != null">
+        sequence = #{sequence,jdbcType=INTEGER},
+      </if>
+      <if test="datas != null">
+        datas = #{datas,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isTop != null">
+        is_top = #{isTop,jdbcType=BIT},
+      </if>
+      <if test="checkStatus != null">
+        check_status = #{checkStatus,jdbcType=INTEGER},
+      </if>
+      <if test="rejectCause != null">
+        reject_cause = #{rejectCause,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinaredstar.cms.api.model.CmsClass">
+    update cms_class
+    set sequence = #{sequence,jdbcType=INTEGER},
+      datas = #{datas,jdbcType=VARCHAR},
+      creator_id = #{creatorId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_top = #{isTop,jdbcType=BIT},
+      check_status = #{checkStatus,jdbcType=INTEGER},
+      reject_cause = #{rejectCause,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getCmsClassListByQuery" parameterType="CmsClassQueryVo" resultType="CmsClassVo">
+    SELECT
+      *
+    FROM cms_class
+    <where>
+      <if test="categoryType != null">
+        category_type = #{categoryType}
+      </if>
+      <if test="categorySubType != null">
+        AND category_sub_type = #{categorySubType}
+      </if>
+      ORDER BY sequence ASC , create_time DESC
+    </where>
+  </select>
+
+  <select id="getCmsClassTagsByIdList" resultType="CmsClassTagsVo">
+    SELECT
+      *
+    FROM cms_tag
+    WHERE id IN
+    <foreach collection="list" item="id" open="(" close=")" index="index" separator=",">
+      #{id}
+    </foreach>
+  </select>
+</mapper>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaredstar.cms.mapper.StudentMapper">
+  <resultMap id="BaseResultMap" type="com.chinaredstar.cms.api.vo.zoo.StudentVo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="phone_num" jdbcType="INTEGER" property="phoneNum" />
+    <association column="class_num" property="classVo" javaType="com.chinaredstar.cms.api.vo.zoo.ClassVo">
+      <id column="class_num" jdbcType="INTEGER" property="classNum"/>
+      <association column="teacher_id" property="teacherVo" javaType="com.chinaredstar.cms.api.vo.zoo.TeacherVo">
+        <id column="teacher_id" jdbcType="INTEGER" property="techaerId"/>
+        <result column="teacher_name" jdbcType="VARCHAR" property="teacherName"/>
+        <result column="type" jdbcType="VARCHAR" property="type"/>
+        <result column="teacher_tel" jdbcType="VARCHAR" property="teacherTel"/>
+      </association>
+    </association>
+  </resultMap>
+  <insert id="addStudent" parameterType="com.chinaredstar.cms.api.vo.zoo.StudentVo" useGeneratedKeys="false">
+    insert into t_student
+    (id,name,sex,age,class_num,phone_num)
+    values(#{id,jdbcType=INTEGER},#{name,jdbcType=VARCHAR},#{sex,jdbcType=VARCHAR},#{age,jdbcType=INTEGER},#{classVo.classNum,jdbcType=INTEGER},#{phoneNum,jdbcType=VARCHAR})
+  </insert>
+
+  <select id="getStudent" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select *
+    from t_student where id = #{id}
+  </select>
+
+  <update id="updateStudent" parameterType="com.chinaredstar.cms.api.vo.zoo.StudentVo">
+    update t_student
+    set
+    name = #{name,jdbcType=VARCHAR}
+    sex = #{sex,jdbcType=VARCHAR}
+    age = #{age,jdbcType=INTEGER}
+    phone_num = #{phoneNum,jdbcType.=VARCHAR}
+    where id = #{id,jdbcType=Integer}
+  </update>
+
+  <delete id="deleteStudent" parameterType="java.lang.Integer">
+    delete from t_student
+    where id = #{id}
+  </delete>
+
+  <select id="getListStudent" parameterType="com.chinaredstar.cms.api.component.Page" resultMap="BaseResultMap">
+    select * from t_student limit #{page.start},#{page.pageSize}
+  </select>
+
+  <select id="getTeacherById" parameterType="INTEGER" resultType="com.chinaredstar.cms.api.vo.zoo.TeacherVo">
+    select t.*
+    from t_teacher t,t_class c,t_student s
+    where
+    t.teacher_id = c.teacher_id
+    and c.class_num = s.class_num
+    and s.id = #{id}
+  </select>
+</mapper>

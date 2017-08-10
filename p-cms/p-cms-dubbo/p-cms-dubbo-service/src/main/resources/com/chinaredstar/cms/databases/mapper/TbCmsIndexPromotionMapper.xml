@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinaredstar.cms.mapper.TbCmsIndexPromotionMapper" >
+  <resultMap id="BaseResultMap" type="com.chinaredstar.cms.api.model.TbCmsIndexPromotion" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="creator_id" property="creatorId" jdbcType="INTEGER" />
+    <result column="creator_name" property="creatorName" jdbcType="VARCHAR" />
+    <result column="editor_id" property="editorId" jdbcType="INTEGER" />
+    <result column="editor_name" property="editorName" jdbcType="VARCHAR" />
+    <result column="p_status" property="pStatus" jdbcType="INTEGER" />
+    <result column="promotion_id" property="promotionId" jdbcType="VARCHAR" />
+    <result column="promotion_name" property="promotionName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="del_flag" property="delFlag" jdbcType="BIT" />
+    <result column="sort_no" property="sortNo" jdbcType="INTEGER" />
+    <result column="activity_id" property="activityId" jdbcType="VARCHAR" />
+    <result column="activity_name" property="activityName" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="IndexPromotionResultMap" type="com.chinaredstar.cms.api.vo.index.IndexPromotionVo">
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="promotion_id" property="promotionId" jdbcType="VARCHAR" />
+    <result column="promotion_name" property="promotionName" jdbcType="VARCHAR" />
+    <collection property="goodsList" column="id" javaType="ArrayList"
+                ofType="com.chinaredstar.cms.api.vo.index.IndexPromotionGoodsVo"
+                select="findGoodsListByPromotionId"
+      />
+  </resultMap>
+  <resultMap id="IndexPromotionGoodsResultMap" type="com.chinaredstar.cms.api.vo.index.IndexPromotionGoodsVo">
+    <result column="goods_name" property="name" jdbcType="VARCHAR"/>
+    <result column="cover_image" property="cover" jdbcType="VARCHAR"/>
+    <result column="goods_id" property="sku" jdbcType="VARCHAR"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, start_time, end_time, creator_id, creator_name, editor_id, editor_name, p_status, 
+    promotion_id, promotion_name, create_time, update_time, del_flag, sort_no, activity_id, 
+    activity_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_cms_index_promotion
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_cms_index_promotion
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByPromotionId" parameterType="java.lang.String">
+    delete from tb_cms_index_promotion
+    where promotion_id = #{promotionId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.chinaredstar.cms.api.model.TbCmsIndexPromotion" >
+    insert into tb_cms_index_promotion (id, start_time, end_time, 
+      creator_id, creator_name, editor_id, 
+      editor_name, p_status, promotion_id, 
+      promotion_name, create_time, update_time, 
+      del_flag, sort_no, activity_id, 
+      activity_name)
+    values (#{id,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{creatorId,jdbcType=INTEGER}, #{creatorName,jdbcType=VARCHAR}, #{editorId,jdbcType=INTEGER}, 
+      #{editorName,jdbcType=VARCHAR}, #{pStatus,jdbcType=INTEGER}, #{promotionId,jdbcType=VARCHAR}, 
+      #{promotionName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{delFlag,jdbcType=BIT}, #{sortNo,jdbcType=INTEGER}, #{activityId,jdbcType=VARCHAR}, 
+      #{activityName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinaredstar.cms.api.model.TbCmsIndexPromotion" >
+    insert into tb_cms_index_promotion
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="creatorId != null" >
+        creator_id,
+      </if>
+      <if test="creatorName != null" >
+        creator_name,
+      </if>
+      <if test="editorId != null" >
+        editor_id,
+      </if>
+      <if test="editorName != null" >
+        editor_name,
+      </if>
+      <if test="pStatus != null" >
+        p_status,
+      </if>
+      <if test="promotionId != null" >
+        promotion_id,
+      </if>
+      <if test="promotionName != null" >
+        promotion_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="sortNo != null" >
+        sort_no,
+      </if>
+      <if test="activityId != null" >
+        activity_id,
+      </if>
+      <if test="activityName != null" >
+        activity_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creatorName != null" >
+        #{creatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="editorId != null" >
+        #{editorId,jdbcType=INTEGER},
+      </if>
+      <if test="editorName != null" >
+        #{editorName,jdbcType=VARCHAR},
+      </if>
+      <if test="pStatus != null" >
+        #{pStatus,jdbcType=INTEGER},
+      </if>
+      <if test="promotionId != null" >
+        #{promotionId,jdbcType=VARCHAR},
+      </if>
+      <if test="promotionName != null" >
+        #{promotionName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=BIT},
+      </if>
+      <if test="sortNo != null" >
+        #{sortNo,jdbcType=INTEGER},
+      </if>
+      <if test="activityId != null" >
+        #{activityId,jdbcType=VARCHAR},
+      </if>
+      <if test="activityName != null" >
+        #{activityName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinaredstar.cms.api.model.TbCmsIndexPromotion" >
+    update tb_cms_index_promotion
+    <set >
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null" >
+        creator_id = #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creatorName != null" >
+        creator_name = #{creatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="editorId != null" >
+        editor_id = #{editorId,jdbcType=INTEGER},
+      </if>
+      <if test="editorName != null" >
+        editor_name = #{editorName,jdbcType=VARCHAR},
+      </if>
+      <if test="pStatus != null" >
+        p_status = #{pStatus,jdbcType=INTEGER},
+      </if>
+      <if test="promotionId != null" >
+        promotion_id = #{promotionId,jdbcType=VARCHAR},
+      </if>
+      <if test="promotionName != null" >
+        promotion_name = #{promotionName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=BIT},
+      </if>
+      <if test="sortNo != null" >
+        sort_no = #{sortNo,jdbcType=INTEGER},
+      </if>
+      <if test="activityId != null" >
+        activity_id = #{activityId,jdbcType=VARCHAR},
+      </if>
+      <if test="activityName != null" >
+        activity_name = #{activityName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinaredstar.cms.api.model.TbCmsIndexPromotion" >
+    update tb_cms_index_promotion
+    set start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      creator_id = #{creatorId,jdbcType=INTEGER},
+      creator_name = #{creatorName,jdbcType=VARCHAR},
+      editor_id = #{editorId,jdbcType=INTEGER},
+      editor_name = #{editorName,jdbcType=VARCHAR},
+      p_status = #{pStatus,jdbcType=INTEGER},
+      promotion_id = #{promotionId,jdbcType=VARCHAR},
+      promotion_name = #{promotionName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      del_flag = #{delFlag,jdbcType=BIT},
+      sort_no = #{sortNo,jdbcType=INTEGER},
+      activity_id = #{activityId,jdbcType=VARCHAR},
+      activity_name = #{activityName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="findOngoingPromotion" resultMap="IndexPromotionResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM tb_cms_index_promotion
+    WHERE del_flag <![CDATA[ <> ]]> 1
+    AND #{queryVo.currentTime,jdbcType=TIMESTAMP} BETWEEN start_time AND end_time
+    ORDER BY sort_no ASC ,create_time DESC
+    limit 1
+  </select>
+  <select id="findCurrentLatestPromotion"  resultMap="IndexPromotionResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM tb_cms_index_promotion
+    WHERE del_flag <![CDATA[ <> ]]> 1
+    AND #{queryVo.currentTime,jdbcType=TIMESTAMP} <![CDATA[ <= ]]> start_time
+    ORDER BY sort_no ASC ,start_time ASC
+    limit 1
+  </select>
+  <select id="findGoodsListByPromotionId" resultMap="IndexPromotionGoodsResultMap">
+    SELECT goods_id,goods_name,cover_image
+    FROM tb_cms_index_promotion_goods
+    WHERE index_promotion_id = #{promotionId,jdbcType=INTEGER}
+    ORDER BY sort_no ASC
+  </select>
+</mapper>

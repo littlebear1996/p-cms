@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinaredstar.cms.mapper.ActivityTemplateMapper" >
+  <resultMap id="BaseResultMap" type="com.chinaredstar.cms.api.model.ActivityTemplate" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="activity_name" property="activityName" jdbcType="VARCHAR" />
+    <result column="activity_type" property="activityType" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="activity_range" property="activityRange" jdbcType="VARCHAR" />
+    <result column="market_id" property="marketId" jdbcType="INTEGER" />
+    <result column="promotion_activity_id" property="promotionActivityId" jdbcType="INTEGER" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
+    <result column="promotion_activity_name" property="promotionActivityName" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.chinaredstar.cms.api.model.ActivityTemplate" extends="BaseResultMap" >
+    <result column="layouts" property="layouts" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, start_time, activity_name, activity_type, status, end_time, activity_range, market_id, 
+    promotion_activity_id, create_date, creater, is_delete, promotion_activity_name
+  </sql>
+  <sql id="Blob_Column_List" >
+    layouts
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from activity_template
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from activity_template
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chinaredstar.cms.api.model.ActivityTemplate" >
+    insert into activity_template (id, start_time, activity_name, 
+      activity_type, status, end_time, 
+      activity_range, market_id, promotion_activity_id, 
+      create_date, creater, is_delete, 
+      promotion_activity_name, layouts)
+    values (#{id,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP}, #{activityName,jdbcType=VARCHAR}, 
+      #{activityType,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{activityRange,jdbcType=VARCHAR}, #{marketId,jdbcType=INTEGER}, #{promotionActivityId,jdbcType=INTEGER}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{creater,jdbcType=VARCHAR}, #{isDelete,jdbcType=INTEGER}, 
+      #{promotionActivityName,jdbcType=VARCHAR}, #{layouts,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinaredstar.cms.api.model.ActivityTemplate" >
+    insert into activity_template
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="activityName != null" >
+        activity_name,
+      </if>
+      <if test="activityType != null" >
+        activity_type,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="activityRange != null" >
+        activity_range,
+      </if>
+      <if test="marketId != null" >
+        market_id,
+      </if>
+      <if test="promotionActivityId != null" >
+        promotion_activity_id,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="creater != null" >
+        creater,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
+      <if test="promotionActivityName != null" >
+        promotion_activity_name,
+      </if>
+      <if test="layouts != null" >
+        layouts,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="activityName != null" >
+        #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="activityType != null" >
+        #{activityType,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="activityRange != null" >
+        #{activityRange,jdbcType=VARCHAR},
+      </if>
+      <if test="marketId != null" >
+        #{marketId,jdbcType=INTEGER},
+      </if>
+      <if test="promotionActivityId != null" >
+        #{promotionActivityId,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="promotionActivityName != null" >
+        #{promotionActivityName,jdbcType=VARCHAR},
+      </if>
+      <if test="layouts != null" >
+        #{layouts,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinaredstar.cms.api.model.ActivityTemplate" >
+    update activity_template
+    <set >
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="activityName != null" >
+        activity_name = #{activityName,jdbcType=VARCHAR},
+      </if>
+      <if test="activityType != null" >
+        activity_type = #{activityType,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="activityRange != null" >
+        activity_range = #{activityRange,jdbcType=VARCHAR},
+      </if>
+      <if test="marketId != null" >
+        market_id = #{marketId,jdbcType=INTEGER},
+      </if>
+      <if test="promotionActivityId != null" >
+        promotion_activity_id = #{promotionActivityId,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="isDelete != null" >
+        is_delete = #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="promotionActivityName != null" >
+        promotion_activity_name = #{promotionActivityName,jdbcType=VARCHAR},
+      </if>
+      <if test="layouts != null" >
+        layouts = #{layouts,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinaredstar.cms.api.model.ActivityTemplate" >
+    update activity_template
+    set start_time = #{startTime,jdbcType=TIMESTAMP},
+      activity_name = #{activityName,jdbcType=VARCHAR},
+      activity_type = #{activityType,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      activity_range = #{activityRange,jdbcType=VARCHAR},
+      market_id = #{marketId,jdbcType=INTEGER},
+      promotion_activity_id = #{promotionActivityId,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      creater = #{creater,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=INTEGER},
+      promotion_activity_name = #{promotionActivityName,jdbcType=VARCHAR},
+      layouts = #{layouts,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinaredstar.cms.api.model.ActivityTemplate" >
+    update activity_template
+    set start_time = #{startTime,jdbcType=TIMESTAMP},
+      activity_name = #{activityName,jdbcType=VARCHAR},
+      activity_type = #{activityType,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      activity_range = #{activityRange,jdbcType=VARCHAR},
+      market_id = #{marketId,jdbcType=INTEGER},
+      promotion_activity_id = #{promotionActivityId,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      creater = #{creater,jdbcType=VARCHAR},
+      is_delete = #{isDelete,jdbcType=INTEGER},
+      promotion_activity_name = #{promotionActivityName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

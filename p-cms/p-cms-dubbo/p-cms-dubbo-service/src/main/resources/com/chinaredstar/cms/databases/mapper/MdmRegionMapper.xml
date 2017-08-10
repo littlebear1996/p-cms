@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinaredstar.cms.mapper.MdmRegionMapper" >
+  <resultMap id="BaseResultMap" type="com.chinaredstar.cms.api.model.MdmRegion" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="md_guid" property="mdGuid" jdbcType="VARCHAR" />
+    <result column="mdm_id" property="mdmId" jdbcType="VARCHAR" />
+    <result column="region_code" property="regionCode" jdbcType="VARCHAR" />
+    <result column="region_name" property="regionName" jdbcType="VARCHAR" />
+    <result column="parent_region_code" property="parentRegionCode" jdbcType="VARCHAR" />
+    <result column="region_class" property="regionClass" jdbcType="VARCHAR" />
+    <result column="is_del" property="isDel" jdbcType="INTEGER" />
+    <result column="region_ps_code" property="regionPsCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, md_guid, mdm_id, region_code, region_name, parent_region_code, region_class, 
+    is_del, region_ps_code
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from mdm_region
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from mdm_region
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.chinaredstar.cms.api.model.MdmRegion" >
+    insert into mdm_region (id, md_guid, mdm_id, 
+      region_code, region_name, parent_region_code, 
+      region_class, is_del, region_ps_code
+      )
+    values (#{id,jdbcType=INTEGER}, #{mdGuid,jdbcType=VARCHAR}, #{mdmId,jdbcType=VARCHAR}, 
+      #{regionCode,jdbcType=VARCHAR}, #{regionName,jdbcType=VARCHAR}, #{parentRegionCode,jdbcType=VARCHAR}, 
+      #{regionClass,jdbcType=VARCHAR}, #{isDel,jdbcType=INTEGER}, #{regionPsCode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.chinaredstar.cms.api.model.MdmRegion" >
+    insert into mdm_region
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="mdGuid != null" >
+        md_guid,
+      </if>
+      <if test="mdmId != null" >
+        mdm_id,
+      </if>
+      <if test="regionCode != null" >
+        region_code,
+      </if>
+      <if test="regionName != null" >
+        region_name,
+      </if>
+      <if test="parentRegionCode != null" >
+        parent_region_code,
+      </if>
+      <if test="regionClass != null" >
+        region_class,
+      </if>
+      <if test="isDel != null" >
+        is_del,
+      </if>
+      <if test="regionPsCode != null" >
+        region_ps_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="mdGuid != null" >
+        #{mdGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="mdmId != null" >
+        #{mdmId,jdbcType=VARCHAR},
+      </if>
+      <if test="regionCode != null" >
+        #{regionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="regionName != null" >
+        #{regionName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRegionCode != null" >
+        #{parentRegionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="regionClass != null" >
+        #{regionClass,jdbcType=VARCHAR},
+      </if>
+      <if test="isDel != null" >
+        #{isDel,jdbcType=INTEGER},
+      </if>
+      <if test="regionPsCode != null" >
+        #{regionPsCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinaredstar.cms.api.model.MdmRegion" >
+    update mdm_region
+    <set >
+      <if test="mdGuid != null" >
+        md_guid = #{mdGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="mdmId != null" >
+        mdm_id = #{mdmId,jdbcType=VARCHAR},
+      </if>
+      <if test="regionCode != null" >
+        region_code = #{regionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="regionName != null" >
+        region_name = #{regionName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRegionCode != null" >
+        parent_region_code = #{parentRegionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="regionClass != null" >
+        region_class = #{regionClass,jdbcType=VARCHAR},
+      </if>
+      <if test="isDel != null" >
+        is_del = #{isDel,jdbcType=INTEGER},
+      </if>
+      <if test="regionPsCode != null" >
+        region_ps_code = #{regionPsCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinaredstar.cms.api.model.MdmRegion" >
+    update mdm_region
+    set md_guid = #{mdGuid,jdbcType=VARCHAR},
+      mdm_id = #{mdmId,jdbcType=VARCHAR},
+      region_code = #{regionCode,jdbcType=VARCHAR},
+      region_name = #{regionName,jdbcType=VARCHAR},
+      parent_region_code = #{parentRegionCode,jdbcType=VARCHAR},
+      region_class = #{regionClass,jdbcType=VARCHAR},
+      is_del = #{isDel,jdbcType=INTEGER},
+      region_ps_code = #{regionPsCode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="queryByRegionCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM mdm_region
+    WHERE 1 = 1
+    AND is_del=0
+    AND region_code = #{regionCode,jdbcType=VARCHAR}
+  </select>
+
+  <select id="queryByMdGuid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM mdm_region
+    WHERE 1 = 1
+    AND md_guid = #{mdGuid,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByMdGuid" parameterType="java.lang.String">
+    update mdm_region
+    set is_del = 1
+    where md_guid = #{mdGuid,jdbcType=VARCHAR}
+  </delete>
+
+  <update id="updateByMdGuid" parameterType="com.chinaredstar.cms.api.model.MdmRegion" >
+    update mdm_region
+    <set >
+      <if test="mdGuid != null" >
+        md_guid = #{mdGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="mdmId != null" >
+        mdm_id = #{mdmId,jdbcType=VARCHAR},
+      </if>
+      <if test="regionCode != null" >
+        region_code = #{regionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="regionName != null" >
+        region_name = #{regionName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRegionCode != null" >
+        parent_region_code = #{parentRegionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="regionClass != null" >
+        region_class = #{regionClass,jdbcType=VARCHAR},
+      </if>
+      <if test="isDel != null" >
+        is_del = #{isDel,jdbcType=INTEGER},
+      </if>
+      <if test="regionPsCode != null" >
+        region_ps_code = #{regionPsCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where md_guid = #{mdGuid,jdbcType=VARCHAR}
+  </update>
+
+
+</mapper>

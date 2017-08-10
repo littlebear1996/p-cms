@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaredstar.cms.mapper.AdvertisementMapper">
+    <resultMap id="BaseResultMap" type="com.chinaredstar.cms.api.vo.advertisement.AdvertisementVo">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="position_id" jdbcType="INTEGER" property="positionId"/>
+        <result column="sequence" jdbcType="INTEGER" property="sequence"/>
+        <result column="img_url" jdbcType="VARCHAR" property="imgUrl"/>
+        <result column="view_count" jdbcType="INTEGER" property="viewCount"/>
+        <result column="agree_count" jdbcType="INTEGER" property="agreeCount"/>
+        <result column="link_type" jdbcType="VARCHAR" property="linkType"/>
+        <result column="link_url" jdbcType="VARCHAR" property="linkUrl"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, title, description, creator_id,creator_name, create_time, position_id, sequence,img_url, view_count, agree_count,link_type,link_url
+  </sql>
+
+    <select id="listADsByPositionCode" parameterType="com.chinaredstar.cms.api.vo.advertisement.AdvertisementQueryVo"
+            resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from cms_advertisement
+        WHERE position_id = (SELECT id FROM cms_advertisement_position WHERE position_code =
+        #{positionCode,jdbcType=VARCHAR})
+        AND
+        #{currentTime,jdbcType=TIMESTAMP} BETWEEN start_time AND end_time
+        AND check_status = 1
+        AND is_online = 1
+
+        <if test="shop != null">
+            AND is_shop = ${shop}
+        </if>
+
+        <if test="home != null">
+            AND is_home = ${home}
+        </if>
+        ORDER BY sequence
+    </select>
+
+    <select id="getMarketPromotionAdvert" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from cms_advertisement
+        WHERE is_home = 1
+        AND check_status = 1
+        AND is_online = 1
+        AND sequence <![CDATA[ <> ]]> 0
+        ORDER BY
+        sequence
+    </select>
+
+    <select id="getAdvertByFirst" parameterType="com.chinaredstar.cms.api.vo.advertisement.AdvertisementQueryVo"
+            resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from cms_advertisement
+        WHERE position_id = (SELECT id FROM cms_advertisement_position WHERE position_code =
+        #{positionCode,jdbcType=VARCHAR})
+        AND
+        #{currentTime,jdbcType=TIMESTAMP} BETWEEN start_time AND end_time
+        AND check_status = 1
+        <if test="online != null">
+            AND is_online = ${online}
+        </if>
+
+        <if test="shop != null">
+            AND is_shop = ${shop}
+        </if>
+
+        <if test="home != null">
+            AND is_home = ${home}
+        </if>
+
+        <if test="sequence != null">
+            AND sequence = ${sequence}
+        </if>
+        ORDER BY sequence LIMIT 1
+    </select>
+
+    <select id="getOnlineAdvertisement" parameterType="com.chinaredstar.cms.api.vo.advertisement.AdvertisementQueryVo"
+            resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from cms_advertisement
+        WHERE
+        #{currentTime,jdbcType=TIMESTAMP} BETWEEN start_time AND end_time
+        AND check_status = 1
+        AND is_online = 1
+        ORDER  BY sequence ASC,start_time ASC ,create_time ASC
+    </select>
+
+    <update id="batchOfflineByAdList" parameterType="java.util.List" >
+        UPDATE cms_advertisement
+        SET is_online = 0
+        WHERE id IN
+        <foreach collection="list" item="id" open="(" close=")" index="index" separator=",">
+            #{id}
+        </foreach>
+    </update>
+
+    <select id="getAdvertisementListByIds" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM cms_advertisement
+        WHERE id IN
+        <foreach collection="list" item="id" open="(" close=")" index="index" separator=",">
+            #{id}
+        </foreach>
+        AND check_status = 1
+        AND is_online = 1
+        ORDER BY sequence
+    </select>
+</mapper>

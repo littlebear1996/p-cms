@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinaredstar.cms.mapper.CmsIndexTopicMapper" >
+  <resultMap id="BaseResultMap" type="com.chinaredstar.cms.api.model.CmsIndexTopic" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="article_type" property="articleType" jdbcType="INTEGER" />
+    <result column="article_id" property="articleId" jdbcType="INTEGER" />
+    <result column="sub_title" property="subTitle" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="sort_no" property="sortNo" jdbcType="INTEGER" />
+    <result column="is_recommend" property="isRecommend" jdbcType="BIT" />
+    <result column="creator_id" property="creatorId" jdbcType="INTEGER" />
+    <result column="creator_name" property="creatorName" jdbcType="VARCHAR" />
+    <result column="editor_id" property="editorId" jdbcType="INTEGER" />
+    <result column="editor_name" property="editorName" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="del_flag" property="delFlag" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, article_type, article_id, sub_title, create_time, sort_no, is_recommend, creator_id, 
+    creator_name, editor_id, editor_name, update_time, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cms_index_topic
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cms_index_topic
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chinaredstar.cms.api.model.CmsIndexTopic" >
+    insert into cms_index_topic (id, article_type, article_id, 
+      sub_title, create_time, sort_no, 
+      is_recommend, creator_id, creator_name, 
+      editor_id, editor_name, update_time, 
+      del_flag)
+    values (#{id,jdbcType=INTEGER}, #{articleType,jdbcType=INTEGER}, #{articleId,jdbcType=INTEGER}, 
+      #{subTitle,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{sortNo,jdbcType=INTEGER}, 
+      #{isRecommend,jdbcType=BIT}, #{creatorId,jdbcType=INTEGER}, #{creatorName,jdbcType=VARCHAR}, 
+      #{editorId,jdbcType=INTEGER}, #{editorName,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{delFlag,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinaredstar.cms.api.model.CmsIndexTopic" >
+    insert into cms_index_topic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="articleType != null" >
+        article_type,
+      </if>
+      <if test="articleId != null" >
+        article_id,
+      </if>
+      <if test="subTitle != null" >
+        sub_title,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="sortNo != null" >
+        sort_no,
+      </if>
+      <if test="isRecommend != null" >
+        is_recommend,
+      </if>
+      <if test="creatorId != null" >
+        creator_id,
+      </if>
+      <if test="creatorName != null" >
+        creator_name,
+      </if>
+      <if test="editorId != null" >
+        editor_id,
+      </if>
+      <if test="editorName != null" >
+        editor_name,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="articleType != null" >
+        #{articleType,jdbcType=INTEGER},
+      </if>
+      <if test="articleId != null" >
+        #{articleId,jdbcType=INTEGER},
+      </if>
+      <if test="subTitle != null" >
+        #{subTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sortNo != null" >
+        #{sortNo,jdbcType=INTEGER},
+      </if>
+      <if test="isRecommend != null" >
+        #{isRecommend,jdbcType=BIT},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creatorName != null" >
+        #{creatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="editorId != null" >
+        #{editorId,jdbcType=INTEGER},
+      </if>
+      <if test="editorName != null" >
+        #{editorName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinaredstar.cms.api.model.CmsIndexTopic" >
+    update cms_index_topic
+    <set >
+      <if test="articleType != null" >
+        article_type = #{articleType,jdbcType=INTEGER},
+      </if>
+      <if test="articleId != null" >
+        article_id = #{articleId,jdbcType=INTEGER},
+      </if>
+      <if test="subTitle != null" >
+        sub_title = #{subTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sortNo != null" >
+        sort_no = #{sortNo,jdbcType=INTEGER},
+      </if>
+      <if test="isRecommend != null" >
+        is_recommend = #{isRecommend,jdbcType=BIT},
+      </if>
+      <if test="creatorId != null" >
+        creator_id = #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creatorName != null" >
+        creator_name = #{creatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="editorId != null" >
+        editor_id = #{editorId,jdbcType=INTEGER},
+      </if>
+      <if test="editorName != null" >
+        editor_name = #{editorName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinaredstar.cms.api.model.CmsIndexTopic" >
+    update cms_index_topic
+    set article_type = #{articleType,jdbcType=INTEGER},
+      article_id = #{articleId,jdbcType=INTEGER},
+      sub_title = #{subTitle,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      sort_no = #{sortNo,jdbcType=INTEGER},
+      is_recommend = #{isRecommend,jdbcType=BIT},
+      creator_id = #{creatorId,jdbcType=INTEGER},
+      creator_name = #{creatorName,jdbcType=VARCHAR},
+      editor_id = #{editorId,jdbcType=INTEGER},
+      editor_name = #{editorName,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      del_flag = #{delFlag,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="findPageList" parameterType="com.chinaredstar.cms.api.vo.index.IndexTopicQueryVo"
+          resultType="com.chinaredstar.cms.api.vo.index.IndexTopicVo">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM cms_index_topic
+    WHERE del_flag <![CDATA[ <> ]]> 1
+    <if test="isRecommend != null" >
+      AND is_recommend = #{isRecommend,jdbcType=BIT}
+    </if>
+    ORDER BY is_recommend DESC, sort_no ASC, create_time DESC
+    <if test="start != null and pageSize != null">
+      limit #{start,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+    </if>
+  </select>
+</mapper>

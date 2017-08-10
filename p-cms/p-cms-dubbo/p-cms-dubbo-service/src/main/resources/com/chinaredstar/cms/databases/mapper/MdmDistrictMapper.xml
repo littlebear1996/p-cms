@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinaredstar.cms.mapper.MdmDistrictMapper" >
+  <resultMap id="BaseResultMap" type="com.chinaredstar.cms.api.model.MdmDistrict" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="md_guid" property="mdGuid" jdbcType="VARCHAR" />
+    <result column="mdm_id" property="mdmId" jdbcType="VARCHAR" />
+    <result column="district_code" property="districtCode" jdbcType="VARCHAR" />
+    <result column="district_name" property="districtName" jdbcType="VARCHAR" />
+    <result column="district_level" property="districtLevel" jdbcType="INTEGER" />
+    <result column="parent_district_code" property="parentDistrictCode" jdbcType="VARCHAR" />
+    <result column="is_del" property="isDel" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, md_guid, mdm_id, district_code, district_name, district_level, parent_district_code,is_del
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from mdm_district
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from mdm_district
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.chinaredstar.cms.api.model.MdmDistrict" >
+    insert into mdm_district (id, md_guid, mdm_id, 
+      district_code, district_name, district_level, 
+      parent_district_code, is_del)
+    values (#{id,jdbcType=INTEGER}, #{mdGuid,jdbcType=VARCHAR}, #{mdmId,jdbcType=VARCHAR}, 
+      #{districtCode,jdbcType=VARCHAR}, #{districtName,jdbcType=VARCHAR}, #{districtLevel,jdbcType=INTEGER}, 
+      #{parentDistrictCode,jdbcType=VARCHAR}, #{isDel,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.chinaredstar.cms.api.model.MdmDistrict" >
+    insert into mdm_district
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="mdGuid != null" >
+        md_guid,
+      </if>
+      <if test="mdmId != null" >
+        mdm_id,
+      </if>
+      <if test="districtCode != null" >
+        district_code,
+      </if>
+      <if test="districtName != null" >
+        district_name,
+      </if>
+      <if test="districtLevel != null" >
+        district_level,
+      </if>
+      <if test="parentDistrictCode != null" >
+        parent_district_code,
+      </if>
+      <if test="isDel != null" >
+        is_del,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="mdGuid != null" >
+        #{mdGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="mdmId != null" >
+        #{mdmId,jdbcType=VARCHAR},
+      </if>
+      <if test="districtCode != null" >
+        #{districtCode,jdbcType=VARCHAR},
+      </if>
+      <if test="districtName != null" >
+        #{districtName,jdbcType=VARCHAR},
+      </if>
+      <if test="districtLevel != null" >
+        #{districtLevel,jdbcType=INTEGER},
+      </if>
+      <if test="parentDistrictCode != null" >
+        #{parentDistrictCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isDel != null" >
+        #{isDel,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinaredstar.cms.api.model.MdmDistrict" >
+    update mdm_district
+    <set >
+      <if test="mdGuid != null" >
+        md_guid = #{mdGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="mdmId != null" >
+        mdm_id = #{mdmId,jdbcType=VARCHAR},
+      </if>
+      <if test="districtCode != null" >
+        district_code = #{districtCode,jdbcType=VARCHAR},
+      </if>
+      <if test="districtName != null" >
+        district_name = #{districtName,jdbcType=VARCHAR},
+      </if>
+      <if test="districtLevel != null" >
+        district_level = #{districtLevel,jdbcType=INTEGER},
+      </if>
+      <if test="parentDistrictCode != null" >
+        parent_district_code = #{parentDistrictCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isDel != null" >
+        is_del = #{isDel,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinaredstar.cms.api.model.MdmDistrict" >
+    update mdm_district
+    set md_guid = #{mdGuid,jdbcType=VARCHAR},
+      mdm_id = #{mdmId,jdbcType=VARCHAR},
+      district_code = #{districtCode,jdbcType=VARCHAR},
+      district_name = #{districtName,jdbcType=VARCHAR},
+      district_level = #{districtLevel,jdbcType=INTEGER},
+      parent_district_code = #{parentDistrictCode,jdbcType=VARCHAR},
+      is_del = #{isDel,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  <select id="queryByDistrictCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM mdm_district
+    WHERE 1 = 1
+    AND is_del=0
+    AND district_code = #{districtCode,jdbcType=VARCHAR}
+  </select>
+
+  <select id="queryByMdGuid" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM mdm_district
+    WHERE 1 = 1
+    AND md_guid = #{mdGuid,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByMdGuid" parameterType="java.lang.String">
+    update mdm_district
+    set is_del = 1
+    where md_guid = #{mdGuid,jdbcType=VARCHAR}
+  </delete>
+
+  <update id="updateByMdGuid" parameterType="com.chinaredstar.cms.api.model.MdmDistrict" >
+    update mdm_district
+    <set >
+      <if test="mdGuid != null" >
+        md_guid = #{mdGuid,jdbcType=VARCHAR},
+      </if>
+      <if test="mdmId != null" >
+        mdm_id = #{mdmId,jdbcType=VARCHAR},
+      </if>
+      <if test="districtCode != null" >
+        district_code = #{districtCode,jdbcType=VARCHAR},
+      </if>
+      <if test="districtName != null" >
+        district_name = #{districtName,jdbcType=VARCHAR},
+      </if>
+      <if test="districtLevel != null" >
+        district_level = #{districtLevel,jdbcType=INTEGER},
+      </if>
+      <if test="parentDistrictCode != null" >
+        parent_district_code = #{parentDistrictCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isDel != null" >
+        is_del = #{isDel,jdbcType=INTEGER},
+      </if>
+    </set>
+    where md_guid = #{mdGuid,jdbcType=VARCHAR}
+  </update>
+
+
+</mapper>

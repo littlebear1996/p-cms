@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaredstar.cms.mapper.ArticleHomeMapper">
+    <resultMap id="BaseResultMap" type="com.chinaredstar.cms.api.vo.article.ArticleHomeVo">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="sub_title" jdbcType="VARCHAR" property="subTitle"/>
+        <result column="category_tags" jdbcType="VARCHAR" property="categoryTags"/>
+        <result column="cover_img_url" jdbcType="VARCHAR" property="coverImgUrl"/>
+        <result column="designer_tel" jdbcType="VARCHAR" property="designerTel"/>
+        <result column="owner_name" jdbcType="VARCHAR" property="ownerName"/>
+        <result column="owner_gender" jdbcType="BIT" property="ownerGender"/>
+        <result column="owner_profession" jdbcType="INTEGER" property="ownerProfession"/>
+        <result column="owner_profession_desc" jdbcType="VARCHAR" property="ownerProfessionDesc"/>
+        <result column="owner_hobby" jdbcType="INTEGER" property="ownerHobby"/>
+        <result column="owner_hobby_desc" jdbcType="VARCHAR" property="ownerHobbyDesc"/>
+        <result column="case_house_style" jdbcType="INTEGER" property="caseHouseStyle"/>
+        <result column="case_house_style_desc" jdbcType="VARCHAR" property="caseHouseStyleDesc"/>
+        <result column="case_house_type" jdbcType="INTEGER" property="caseHouseType"/>
+        <result column="case_house_type_desc" jdbcType="VARCHAR" property="caseHouseTypeDesc"/>
+        <result column="case_house_area" jdbcType="INTEGER" property="caseHouseArea"/>
+        <result column="case_house_expense" jdbcType="INTEGER" property="caseHouseExpense"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="creator_id" jdbcType="INTEGER" property="creatorId"/>
+        <result column="tags" jdbcType="VARCHAR" property="tags"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.chinaredstar.cms.api.vo.article.ArticleHomeVo">
+        <result column="content" jdbcType="LONGVARCHAR" property="content"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, title, sub_title, category_tags, cover_img_url, designer_tel, owner_name,
+    owner_gender, owner_profession, owner_hobby, case_house_style, case_house_type, case_house_area, 
+    case_house_expense, create_time,creator_id,tags,type
+  </sql>
+    <sql id="Blob_Column_List">
+    content
+  </sql>
+    <select id="getArticleHomeListByIds" resultType="ArticleHomeVo">
+        SELECT
+        <include refid="Base_Column_List"/>
+
+        FROM cms_article_home
+        WHERE id IN
+        <foreach collection="list" item="id" open="(" close=")" index="index" separator=",">
+            #{id}
+        </foreach>
+        AND check_status = 1
+        AND is_online = 1
+    </select>
+
+    <select id="getArticleHomeList" resultType="ArticleHomeVo">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        cms_article_home
+        WHERE
+        1 = 1
+        AND check_status = 1
+        AND is_online = 1
+        ORDER BY is_top DESC, set_top_time DESC,create_time DESC
+        LIMIT #{page.start}, #{page.pageSize}
+    </select>
+    <select id="getDetailById" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+        SELECT
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>,
+        (SELECT object_val FROM cms_data_dic WHERE name = '职业' and object_id = owner_profession) owner_profession_desc,
+        (SELECT object_val FROM cms_data_dic WHERE name = '爱好' and object_id = owner_hobby) owner_hobby_desc,
+        (SELECT object_val FROM cms_data_dic WHERE name = '风格' and object_id = case_house_style) case_house_style_desc,
+        (SELECT object_val FROM cms_data_dic WHERE name = '户型' and object_id = case_house_type) case_house_type_desc
+        FROM cms_article_home
+        WHERE 1 =1
+        AND id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="getAllIds" resultType="java.lang.Integer">
+        SELECT id
+        FROM  cms_article_home
+    </select>
+    <update id="updateViewCountById" parameterType="java.lang.Integer">
+        UPDATE cms_article_home set view_count = #{viewCount}
+        WHERE id = #{id}
+    </update>
+</mapper>

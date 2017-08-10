@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinaredstar.cms.mapper.CmsThreeDimensionalMapper">
+    <resultMap id="BaseResultMap" type="com.chinaredstar.cms.api.model.CmsThreeDimensional">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="brandId" property="brandid" jdbcType="VARCHAR"/>
+        <result column="brandName" property="brandname" jdbcType="VARCHAR"/>
+        <result column="createDate" property="createdate" jdbcType="TIMESTAMP"/>
+        <result column="storageName" property="storagename" jdbcType="VARCHAR"/>
+        <result column="fileType" property="filetype" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="tag" property="tag" jdbcType="VARCHAR"/>
+        <result column="companyId" property="companyid" jdbcType="VARCHAR"/>
+        <result column="companyName" property="companyname" jdbcType="VARCHAR"/>
+        <result column="productId" property="productid" jdbcType="VARCHAR"/>
+        <result column="productSpu" property="productspu" jdbcType="VARCHAR"/>
+        <result column="productName" property="productname" jdbcType="VARCHAR"/>
+        <result column="iosModel" property="iosmodel" jdbcType="VARCHAR"/>
+        <result column="androidModel" property="androidmodel" jdbcType="VARCHAR"/>
+        <result column="h5Model" property="h5model" jdbcType="VARCHAR"/>
+        <result column="cover" property="cover" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+
+        <result column="version" property="version" jdbcType="VARCHAR" />
+        <result column="h5ModelSize" property="h5ModelSize" jdbcType="VARCHAR" />
+        <result column="iosModelSize" property="iosModelSize" jdbcType="VARCHAR" />
+        <result column="androidModelSize" property="androidModelSize" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, brandId, brandName, createDate, storageName, fileType, status, tag, companyId, 
+    companyName, productId, productSpu, productName, iosModel, androidModel, h5Model, cover, remark,
+    version, h5ModelSize, iosModelSize, androidModelSize
+  </sql>
+
+    <select id="queryDataBySpu" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM cms_three_dimensional
+        WHERE productSpu=#{spu}
+        AND status=#{status}
+        AND isDeleted=0
+        ORDER BY createDate DESC
+        LIMIT 1
+    </select>
+
+
+    <select id="queryDataByBrandId" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM cms_three_dimensional
+        WHERE brandId=#{brandId}
+        AND status=#{status}
+        AND isDeleted=0
+        ORDER BY createDate DESC
+        LIMIT ${pageSize}
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from cms_three_dimensional
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cms_three_dimensional
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.chinaredstar.cms.api.model.CmsThreeDimensional">
+    insert into cms_three_dimensional (id, brandId, brandName, 
+      createDate, storageName, fileType, 
+      status, tag, companyId, 
+      companyName, productId, productSpu, 
+      productName, iosModel, androidModel, 
+      h5Model,cover,remark)
+    values (#{id,jdbcType=INTEGER}, #{brandid,jdbcType=VARCHAR}, #{brandname,jdbcType=VARCHAR}, 
+      #{createdate,jdbcType=TIMESTAMP}, #{storagename,jdbcType=VARCHAR}, #{filetype,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{tag,jdbcType=VARCHAR}, #{companyid,jdbcType=VARCHAR}, 
+      #{companyname,jdbcType=VARCHAR}, #{productid,jdbcType=VARCHAR}, #{productspu,jdbcType=VARCHAR}, 
+      #{productname,jdbcType=VARCHAR}, #{iosmodel,jdbcType=VARCHAR}, #{androidmodel,jdbcType=VARCHAR}, 
+      #{h5model,jdbcType=VARCHAR},#{cover,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.chinaredstar.cms.api.model.CmsThreeDimensional">
+        insert into cms_three_dimensional
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="brandid != null">
+                brandId,
+            </if>
+            <if test="brandname != null">
+                brandName,
+            </if>
+            <if test="createdate != null">
+                createDate,
+            </if>
+            <if test="storagename != null">
+                storageName,
+            </if>
+            <if test="filetype != null">
+                fileType,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="tag != null">
+                tag,
+            </if>
+            <if test="companyid != null">
+                companyId,
+            </if>
+            <if test="companyname != null">
+                companyName,
+            </if>
+            <if test="productid != null">
+                productId,
+            </if>
+            <if test="productspu != null">
+                productSpu,
+            </if>
+            <if test="productname != null">
+                productName,
+            </if>
+            <if test="iosmodel != null">
+                iosModel,
+            </if>
+            <if test="androidmodel != null">
+                androidModel,
+            </if>
+            <if test="h5model != null">
+                h5Model,
+            </if>
+            <if test="cover != null">
+                h5Model,
+            </if>
+            <if test="remark != null">
+                h5Model,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="brandid != null">
+                #{brandid,jdbcType=VARCHAR},
+            </if>
+            <if test="brandname != null">
+                #{brandname,jdbcType=VARCHAR},
+            </if>
+            <if test="createdate != null">
+                #{createdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="storagename != null">
+                #{storagename,jdbcType=VARCHAR},
+            </if>
+            <if test="filetype != null">
+                #{filetype,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="tag != null">
+                #{tag,jdbcType=VARCHAR},
+            </if>
+            <if test="companyid != null">
+                #{companyid,jdbcType=VARCHAR},
+            </if>
+            <if test="companyname != null">
+                #{companyname,jdbcType=VARCHAR},
+            </if>
+            <if test="productid != null">
+                #{productid,jdbcType=VARCHAR},
+            </if>
+            <if test="productspu != null">
+                #{productspu,jdbcType=VARCHAR},
+            </if>
+            <if test="productname != null">
+                #{productname,jdbcType=VARCHAR},
+            </if>
+            <if test="iosmodel != null">
+                #{iosmodel,jdbcType=VARCHAR},
+            </if>
+            <if test="androidmodel != null">
+                #{androidmodel,jdbcType=VARCHAR},
+            </if>
+            <if test="h5model != null">
+                #{h5model,jdbcType=VARCHAR},
+            </if>
+            <if test="cover != null">
+                #{cover,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.chinaredstar.cms.api.model.CmsThreeDimensional">
+        update cms_three_dimensional
+        <set>
+            <if test="brandid != null">
+                brandId = #{brandid,jdbcType=VARCHAR},
+            </if>
+            <if test="brandname != null">
+                brandName = #{brandname,jdbcType=VARCHAR},
+            </if>
+            <if test="createdate != null">
+                createDate = #{createdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="storagename != null">
+                storageName = #{storagename,jdbcType=VARCHAR},
+            </if>
+            <if test="filetype != null">
+                fileType = #{filetype,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="tag != null">
+                tag = #{tag,jdbcType=VARCHAR},
+            </if>
+            <if test="companyid != null">
+                companyId = #{companyid,jdbcType=VARCHAR},
+            </if>
+            <if test="companyname != null">
+                companyName = #{companyname,jdbcType=VARCHAR},
+            </if>
+            <if test="productid != null">
+                productId = #{productid,jdbcType=VARCHAR},
+            </if>
+            <if test="productspu != null">
+                productSpu = #{productspu,jdbcType=VARCHAR},
+            </if>
+            <if test="productname != null">
+                productName = #{productname,jdbcType=VARCHAR},
+            </if>
+            <if test="iosmodel != null">
+                iosModel = #{iosmodel,jdbcType=VARCHAR},
+            </if>
+            <if test="androidmodel != null">
+                androidModel = #{androidmodel,jdbcType=VARCHAR},
+            </if>
+            <if test="h5model != null">
+                h5Model = #{h5model,jdbcType=VARCHAR},
+            </if>
+            <if test="cover != null">
+                h5Model = #{cover,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                h5Model = #{remark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.chinaredstar.cms.api.model.CmsThreeDimensional">
+    update cms_three_dimensional
+    set brandId = #{brandid,jdbcType=VARCHAR},
+      brandName = #{brandname,jdbcType=VARCHAR},
+      createDate = #{createdate,jdbcType=TIMESTAMP},
+      storageName = #{storagename,jdbcType=VARCHAR},
+      fileType = #{filetype,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      tag = #{tag,jdbcType=VARCHAR},
+      companyId = #{companyid,jdbcType=VARCHAR},
+      companyName = #{companyname,jdbcType=VARCHAR},
+      productId = #{productid,jdbcType=VARCHAR},
+      productSpu = #{productspu,jdbcType=VARCHAR},
+      productName = #{productname,jdbcType=VARCHAR},
+      iosModel = #{iosmodel,jdbcType=VARCHAR},
+      androidModel = #{androidmodel,jdbcType=VARCHAR},
+      h5Model = #{h5model,jdbcType=VARCHAR},
+      cover = #{cover,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

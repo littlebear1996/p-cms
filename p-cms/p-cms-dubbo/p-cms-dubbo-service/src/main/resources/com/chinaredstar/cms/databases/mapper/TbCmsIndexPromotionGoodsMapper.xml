@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinaredstar.cms.mapper.TbCmsIndexPromotionGoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.chinaredstar.cms.api.model.TbCmsIndexPromotionGoods" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="index_promotion_id" property="indexPromotionId" jdbcType="INTEGER" />
+    <result column="goods_id" property="goodsId" jdbcType="VARCHAR" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="cover_image" property="coverImage" jdbcType="VARCHAR" />
+    <result column="sort_no" property="sortNo" jdbcType="INTEGER" />
+    <result column="creator_id" property="creatorId" jdbcType="INTEGER" />
+    <result column="creator_name" property="creatorName" jdbcType="VARCHAR" />
+    <result column="editor_id" property="editorId" jdbcType="INTEGER" />
+    <result column="editor_name" property="editorName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, index_promotion_id, goods_id, goods_name, cover_image, sort_no, creator_id, creator_name, 
+    editor_id, editor_name, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_cms_index_promotion_goods
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_cms_index_promotion_goods
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByPromotionIdAndGoodsId">
+    delete from tb_cms_index_promotion_goods
+    where goods_id = #{goodsId,jdbcType=VARCHAR}
+    AND index_promotion_id in (select id from tb_cms_index_promotion where promotion_id = #{promotionId,jdbcType=VARCHAR})
+  </delete>
+  <insert id="insert" parameterType="com.chinaredstar.cms.api.model.TbCmsIndexPromotionGoods" >
+    insert into tb_cms_index_promotion_goods (id, index_promotion_id, goods_id, 
+      goods_name, cover_image, sort_no, 
+      creator_id, creator_name, editor_id, 
+      editor_name, create_time, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{indexPromotionId,jdbcType=INTEGER}, #{goodsId,jdbcType=VARCHAR}, 
+      #{goodsName,jdbcType=VARCHAR}, #{coverImage,jdbcType=VARCHAR}, #{sortNo,jdbcType=INTEGER}, 
+      #{creatorId,jdbcType=INTEGER}, #{creatorName,jdbcType=VARCHAR}, #{editorId,jdbcType=INTEGER}, 
+      #{editorName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinaredstar.cms.api.model.TbCmsIndexPromotionGoods" >
+    insert into tb_cms_index_promotion_goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="indexPromotionId != null" >
+        index_promotion_id,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+      <if test="coverImage != null" >
+        cover_image,
+      </if>
+      <if test="sortNo != null" >
+        sort_no,
+      </if>
+      <if test="creatorId != null" >
+        creator_id,
+      </if>
+      <if test="creatorName != null" >
+        creator_name,
+      </if>
+      <if test="editorId != null" >
+        editor_id,
+      </if>
+      <if test="editorName != null" >
+        editor_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="indexPromotionId != null" >
+        #{indexPromotionId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="coverImage != null" >
+        #{coverImage,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNo != null" >
+        #{sortNo,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creatorName != null" >
+        #{creatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="editorId != null" >
+        #{editorId,jdbcType=INTEGER},
+      </if>
+      <if test="editorName != null" >
+        #{editorName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinaredstar.cms.api.model.TbCmsIndexPromotionGoods" >
+    update tb_cms_index_promotion_goods
+    <set >
+      <if test="indexPromotionId != null" >
+        index_promotion_id = #{indexPromotionId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null" >
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="coverImage != null" >
+        cover_image = #{coverImage,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNo != null" >
+        sort_no = #{sortNo,jdbcType=INTEGER},
+      </if>
+      <if test="creatorId != null" >
+        creator_id = #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creatorName != null" >
+        creator_name = #{creatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="editorId != null" >
+        editor_id = #{editorId,jdbcType=INTEGER},
+      </if>
+      <if test="editorName != null" >
+        editor_name = #{editorName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinaredstar.cms.api.model.TbCmsIndexPromotionGoods" >
+    update tb_cms_index_promotion_goods
+    set index_promotion_id = #{indexPromotionId,jdbcType=INTEGER},
+      goods_id = #{goodsId,jdbcType=VARCHAR},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      cover_image = #{coverImage,jdbcType=VARCHAR},
+      sort_no = #{sortNo,jdbcType=INTEGER},
+      creator_id = #{creatorId,jdbcType=INTEGER},
+      creator_name = #{creatorName,jdbcType=VARCHAR},
+      editor_id = #{editorId,jdbcType=INTEGER},
+      editor_name = #{editorName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

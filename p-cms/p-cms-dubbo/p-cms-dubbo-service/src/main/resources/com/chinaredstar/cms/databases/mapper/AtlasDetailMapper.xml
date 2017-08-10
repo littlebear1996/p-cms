@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaredstar.cms.mapper.AtlasDetailMapper">
+    <resultMap id="BaseResultMap" type="com.chinaredstar.cms.api.vo.atlas.AtlasDetailVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="atlas_id" property="atlasId" jdbcType="BIGINT"/>
+        <result column="img_url" property="imgUrl" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column">
+        id,atlas_id,img_url
+    </sql>
+    <select id="findByAtlasId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        SELECT * FROM cms_atlas_detail
+        WHERE atlas_id = #{atlasId,jdbcType=BIGINT}
+    </select>
+
+    <insert id="insert" parameterType="com.chinaredstar.cms.api.vo.atlas.AtlasDetailVo">
+        insert into cms_atlas_detail
+        (atlas_id,img_url)
+        VALUES
+        (
+          #{atlasId,jdbcType=BIGINT},
+          #{imgUrl,jdbcType=VARCHAR}
+        )
+
+    </insert>
+    <delete id="delete" >
+         DELETE FROM cms_atlas_detail
+        WHERE atlas_id =
+          (
+            SELECT id
+            FROM cms_atlas
+            WHERE
+            designerId = #{designerId,jdbcType=VARCHAR}
+            AND caseId = #{caseId,jdbcType=VARCHAR}
+            AND openId = #{openId,jdbcType=VARCHAR}
+          )
+    </delete>
+    <delete id="deleteByAtlasId" parameterType="com.chinaredstar.cms.api.vo.atlas.AtlasVo">
+        DELETE FROM cms_atlas_detail
+        WHERE atlas_id =
+          (
+            SELECT id
+            FROM cms_atlas
+        WHERE 1=1
+        <if test="objType != null">
+            AND obj_type = #{objType,jdbcType=INTEGER}
+        </if>
+        <if test="objValue != null">
+            AND obj_type = #{objValue,jdbcType=INTEGER}
+        </if>
+        <if test="objUuid != null">
+            AND obj_uuid = #{objUuid,jdbcType=INTEGER}
+        </if>
+          )
+
+    </delete>
+</mapper>

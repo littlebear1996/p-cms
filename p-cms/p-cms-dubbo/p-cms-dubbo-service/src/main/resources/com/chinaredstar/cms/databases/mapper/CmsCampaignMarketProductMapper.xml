@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaredstar.cms.mapper.CmsCampaignMarketProductMapper">
+  <resultMap id="BaseResultMap" type="com.chinaredstar.cms.api.model.CmsCampaignMarketProduct">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="campaign_market_id" jdbcType="INTEGER" property="campaignMarketId" />
+    <result column="product_id" jdbcType="VARCHAR" property="productId" />
+    <result column="type" jdbcType="BIT" property="type" />
+    <result column="is_recommend_index" jdbcType="BIT" property="isRecommendIndex" />
+    <result column="is_recommend_brand" jdbcType="BIT" property="isRecommendBrand" />
+    <result column="sequence" jdbcType="INTEGER" property="sequence" />
+    <result column="brand_id" jdbcType="VARCHAR" property="brandId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="creator_id" jdbcType="VARCHAR" property="creatorId" />
+    <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="cheap" javaType="DECIMAL" property="cheap"/>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, campaign_market_id, product_id, type, is_recommend_index, is_recommend_brand,
+    sequence, brand_id, create_time, creator_id, creator,cheap
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cms_campaign_market_product
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cms_campaign_market_product
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chinaredstar.cms.api.model.CmsCampaignMarketProduct">
+    insert into cms_campaign_market_product (id, campaign_market_id, product_id, 
+      type, is_recommend_index, is_recommend_brand, 
+      sequence, brand_id, create_time, 
+      creator_id, creator)
+    values (#{id,jdbcType=INTEGER}, #{campaignMarketId,jdbcType=INTEGER}, #{productId,jdbcType=VARCHAR}, 
+      #{type,jdbcType=BIT}, #{isRecommendIndex,jdbcType=BIT}, #{isRecommendBrand,jdbcType=BIT}, 
+      #{sequence,jdbcType=INTEGER}, #{brandId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{creatorId,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinaredstar.cms.api.model.CmsCampaignMarketProduct">
+    insert into cms_campaign_market_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="campaignMarketId != null">
+        campaign_market_id,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="isRecommendIndex != null">
+        is_recommend_index,
+      </if>
+      <if test="isRecommendBrand != null">
+        is_recommend_brand,
+      </if>
+      <if test="sequence != null">
+        sequence,
+      </if>
+      <if test="brandId != null">
+        brand_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="campaignMarketId != null">
+        #{campaignMarketId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=BIT},
+      </if>
+      <if test="isRecommendIndex != null">
+        #{isRecommendIndex,jdbcType=BIT},
+      </if>
+      <if test="isRecommendBrand != null">
+        #{isRecommendBrand,jdbcType=BIT},
+      </if>
+      <if test="sequence != null">
+        #{sequence,jdbcType=INTEGER},
+      </if>
+      <if test="brandId != null">
+        #{brandId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinaredstar.cms.api.model.CmsCampaignMarketProduct">
+    update cms_campaign_market_product
+    <set>
+      <if test="campaignMarketId != null">
+        campaign_market_id = #{campaignMarketId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=BIT},
+      </if>
+      <if test="isRecommendIndex != null">
+        is_recommend_index = #{isRecommendIndex,jdbcType=BIT},
+      </if>
+      <if test="isRecommendBrand != null">
+        is_recommend_brand = #{isRecommendBrand,jdbcType=BIT},
+      </if>
+      <if test="sequence != null">
+        sequence = #{sequence,jdbcType=INTEGER},
+      </if>
+      <if test="brandId != null">
+        brand_id = #{brandId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="cheap != null">
+        cheap = #{cheap,jdbcType=DECIMAL}
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinaredstar.cms.api.model.CmsCampaignMarketProduct">
+    update cms_campaign_market_product
+    set campaign_market_id = #{campaignMarketId,jdbcType=INTEGER},
+      product_id = #{productId,jdbcType=VARCHAR},
+      type = #{type,jdbcType=BIT},
+      is_recommend_index = #{isRecommendIndex,jdbcType=BIT},
+      is_recommend_brand = #{isRecommendBrand,jdbcType=BIT},
+      sequence = #{sequence,jdbcType=INTEGER},
+      brand_id = #{brandId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      creator_id = #{creatorId,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=VARCHAR},
+      cheap = #{cheap,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="find" parameterType="com.chinaredstar.cms.api.vo.campaign.CampaignMarketProductQueryVo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cms_campaign_market_product
+    where 1=1
+    <if test="campaignMarketId != null">
+      and campaign_market_id = #{campaignMarketId}
+    </if>
+    <if test="type != null">
+      and type = #{type}
+    </if>
+    <if test="isRecommendBrand != null">
+      and is_recommend_brand = #{isRecommendBrand}
+    </if>
+    <if test="brandId != null">
+      and brand_id = #{brandId}
+    </if>
+    <if test="isRecommendIndex != null">
+      and is_recommend_index = #{isRecommendIndex}
+    </if>
+  ORDER  by sequence   ASC
+
+    <if test="pageNo != null and pageSize != null">
+      limit #{pageStart,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+    </if>
+
+
+
+
+  </select>
+</mapper>

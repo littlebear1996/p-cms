@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinaredstar.cms.mapper.CmsIndexCategoryMapper" >
+  <resultMap id="BaseResultMap" type="com.chinaredstar.cms.api.model.CmsIndexCategory" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="sort_no" property="sortNo" jdbcType="INTEGER" />
+    <result column="banner" property="banner" jdbcType="VARCHAR" />
+    <result column="creator_id" property="creatorId" jdbcType="INTEGER" />
+    <result column="creator_name" property="creatorName" jdbcType="VARCHAR" />
+    <result column="editor_id" property="editorId" jdbcType="INTEGER" />
+    <result column="editor_name" property="editorName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="link_type" property="linkType" jdbcType="VARCHAR" />
+    <result column="link_url" property="linkUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, title, sort_no, banner, creator_id, creator_name, editor_id, editor_name, create_time,
+    update_time, link_type, link_url
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from cms_index_category
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cms_index_category
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chinaredstar.cms.api.model.CmsIndexCategory" >
+    insert into cms_index_category (id, title, sort_no,
+    banner, creator_id, creator_name,
+    editor_id, editor_name, create_time,
+    update_time, link_type, link_url
+    )
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{sortNo,jdbcType=INTEGER},
+    #{banner,jdbcType=VARCHAR}, #{creatorId,jdbcType=INTEGER}, #{creatorName,jdbcType=VARCHAR},
+    #{editorId,jdbcType=INTEGER}, #{editorName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+    #{updateTime,jdbcType=TIMESTAMP}, #{linkType,jdbcType=VARCHAR}, #{linkUrl,jdbcType=VARCHAR}
+    )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinaredstar.cms.api.model.CmsIndexCategory" >
+    insert into cms_index_category
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="sortNo != null" >
+        sort_no,
+      </if>
+      <if test="banner != null" >
+        banner,
+      </if>
+      <if test="creatorId != null" >
+        creator_id,
+      </if>
+      <if test="creatorName != null" >
+        creator_name,
+      </if>
+      <if test="editorId != null" >
+        editor_id,
+      </if>
+      <if test="editorName != null" >
+        editor_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="linkType != null" >
+        link_type,
+      </if>
+      <if test="linkUrl != null" >
+        link_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNo != null" >
+        #{sortNo,jdbcType=INTEGER},
+      </if>
+      <if test="banner != null" >
+        #{banner,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null" >
+        #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creatorName != null" >
+        #{creatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="editorId != null" >
+        #{editorId,jdbcType=INTEGER},
+      </if>
+      <if test="editorName != null" >
+        #{editorName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="linkType != null" >
+        #{linkType,jdbcType=VARCHAR},
+      </if>
+      <if test="linkUrl != null" >
+        #{linkUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinaredstar.cms.api.model.CmsIndexCategory" >
+    update cms_index_category
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNo != null" >
+        sort_no = #{sortNo,jdbcType=INTEGER},
+      </if>
+      <if test="banner != null" >
+        banner = #{banner,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null" >
+        creator_id = #{creatorId,jdbcType=INTEGER},
+      </if>
+      <if test="creatorName != null" >
+        creator_name = #{creatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="editorId != null" >
+        editor_id = #{editorId,jdbcType=INTEGER},
+      </if>
+      <if test="editorName != null" >
+        editor_name = #{editorName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="linkType != null" >
+        link_type = #{linkType,jdbcType=VARCHAR},
+      </if>
+      <if test="linkUrl != null" >
+        link_url = #{linkUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinaredstar.cms.api.model.CmsIndexCategory" >
+    update cms_index_category
+    set title = #{title,jdbcType=VARCHAR},
+      sort_no = #{sortNo,jdbcType=INTEGER},
+      banner = #{banner,jdbcType=VARCHAR},
+      creator_id = #{creatorId,jdbcType=INTEGER},
+      creator_name = #{creatorName,jdbcType=VARCHAR},
+      editor_id = #{editorId,jdbcType=INTEGER},
+      editor_name = #{editorName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      link_type = #{linkType,jdbcType=VARCHAR},
+      link_url = #{linkUrl,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="getAll" resultType="com.chinaredstar.cms.api.vo.index.IndexCategoryVo" >
+    select
+    <include refid="Base_Column_List" />
+    from cms_index_category
+    ORDER BY sort_no ASC
+  </select>
+  <select id="findById" resultType="com.chinaredstar.cms.api.vo.index.IndexCategoryVo" parameterType="java.lang.Integer">
+    select
+    <include refid="Base_Column_List" />
+    from cms_index_category
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+</mapper>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.chinaredstar</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.2.3.RELEASE</version>
+    </parent>
+
+    <artifactId>p-cms</artifactId>
+    <packaging>pom</packaging>
+    <version>1.2.6.RELEASE</version>
+    <modules>
+        <module>p-cms-web</module>
+        <module>p-cms-dubbo</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+
+
+
+
+
+
+    <build>
+        <plugins>
+
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <!--如果pom 继承自骨架工程 version不需要配置-->
+                <version>2.7</version>
+                <configuration>
+                    <!--检查-->
+                    <check>
+                        <!--每个类的分支覆盖率-->
+                        <branchRate>5</branchRate>
+                        <!--每个类的代码行覆盖率-->
+                        <lineRate>10</lineRate>
+                        <!--校验失败则中止.即为true时如果校验失败则打包执行失败,反之则只是打出告警日志-->
+                        <haltOnFailure>false</haltOnFailure>
+                        <!--整体的分支覆盖率-->
+                        <totalBranchRate>5</totalBranchRate>
+                        <!--整体的代码行覆盖率-->
+                        <totalLineRate>5</totalLineRate>
+                        <!--每个包的分支行覆盖率-->
+                        <packageBranchRate>5</packageBranchRate>
+                        <!--每个包的代码行覆盖率-->
+                        <packageLineRate>5</packageLineRate>
+                        <regexes>
+                            <!--通过表达式设定覆盖率伐值-->
+                            <regex>
+                                <pattern>com.chinaredstar.*</pattern>
+                                <branchRate>5</branchRate>
+                                <lineRate>10</lineRate>
+                            </regex>
+                        </regexes>
+                    </check>
+                    <formats>
+                        <!--生产报表格式-->
+                        <format>html</format>
+                        <format>xml</format>
+                    </formats>
+                    <!--设置为true 表示生成多模块项目报表 -->
+                    <!-- Generate aggregate reports in multi-module projects.-->
+                    <aggregate>true</aggregate>
+                    <instrumentation>
+                        <!--有时候我们要做覆盖率统计时,不需要全部代码都做的,为了更准确的统计我们想知道的代码的测试用例覆盖率,我们就需要加一些配置,来控制统计范围.-->
+                        <!--过滤那些类不走单元测试 可以配置包的全路径也可以配置**-->
+                        <excludes>
+                            <exclude>**/api/**/*.class</exclude>
+                            <exclude>**/vo/**/*.class</exclude>
+                            <exclude>**/task/**/*.class</exclude>
+                            <exclude>**/model/**/*.class</exclude>
+                            <exclude>**/config/**/*.class</exclude>
+                            <exclude>**/mapper/**/*.class</exclude>
+							<exclude>**/**/Application.class</exclude>
+                        </excludes>
+                    </instrumentation>
+                </configuration>
+                <executions>
+                    <!--默认<check/>这个校验是需要单独敲命令的,当然可以根据实际需要,在execution里配置goal和phase来完成命令的绑定.比如在打包前做校验,可以这么配置execution-->
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>check</goal>
+                            <goal>cobertura</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

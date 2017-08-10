@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaredstar.cms.mapper.ArticleMarketMapper">
+    <resultMap id="BaseResultMap" type="ArticleMarketVo">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="sub_title" jdbcType="VARCHAR" property="subTitle"/>
+        <result column="category_tags" jdbcType="VARCHAR" property="categoryTags"/>
+        <result column="cover_img_url" jdbcType="VARCHAR" property="coverImgUrl"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="creator_id" jdbcType="INTEGER" property="creatorId"/>
+        <result column="creator_name" jdbcType="VARCHAR" property="creatorName"/>
+        <result column="content" jdbcType="LONGVARCHAR" property="content"/>
+        <result column="tags" jdbcType="VARCHAR" property="tags"/>
+        <result column="marketId" jdbcType="VARCHAR" property="marketId"/>
+        <result column="marketName" jdbcType="VARCHAR" property="marketName"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, title, sub_title, category_tags, cover_img_url, create_time, creator_id,creator_name,tags, marketId, marketName
+  </sql>
+    <sql id="Blob_Column_List">
+    content
+  </sql>
+    <select id="listByCategoryTag" parameterType="ArticleMarketQueryVo" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM cms_article_market
+        WHERE category_tags = #{categoryTag,jdbcType=VARCHAR}
+        AND check_status = 1
+        AND is_online = 1
+        AND IFNULL(VERSION, 1) <![CDATA[ <> ]]> 2
+        <if test="top != null">
+          AND is_top = #{top}
+        </if>
+        <if test="marketId != null">
+          AND marketId = #{marketId}
+        </if>
+        <if test="recommand != null">
+          AND is_recommand = #{recommand}
+        </if>
+        <if test="isTop != null and isRecommand == null">
+            ORDER BY set_top_time DESC , create_time DESC
+        </if>
+        <if test="isRecommand != null and isTop == null">
+            ORDER BY set_recommand_time DESC , create_time DESC
+        </if>
+        <if test="pageIndex != null and pageSize != null">
+            limit #{pageIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+        </if>
+    </select>
+    <select id="listByCategoryTagAndCity" parameterType="ArticleMarketQueryVo" resultMap="BaseResultMap">
+        SELECT
+        cam.id, cam.title, cam.sub_title, cam.category_tags, cam.cover_img_url, cam.create_time, cam.creator_id, cam.creator_name, cam.tags, cam.marketId, cam.marketName
+        FROM cms_article_market cam
+        <if test="cityId != null and cityId != ''">
+            INNER JOIN cms_index_article_city ciac ON (ciac.article_id = cam.id AND ciac.article_type = 2 AND ciac.city_id = #{cityId,jdbcType=VARCHAR})
+        </if>
+        WHERE cam.category_tags = #{categoryTag,jdbcType=VARCHAR}
+        AND cam.check_status = 1
+        AND cam.is_online = 1
+        AND cam.version = 2
+        <if test="top != null">
+            AND cam.is_top = #{top}
+        </if>
+        <if test="marketId != null">
+            AND cam.marketId = #{marketId}
+        </if>
+        <if test="recommand != null">
+            AND cam.is_recommand = #{recommand}
+        </if>
+        <if test="isTop != null and isRecommand == null">
+            ORDER BY cam.set_top_time DESC , cam.create_time DESC
+        </if>
+        <if test="isRecommand != null and isTop == null">
+            ORDER BY cam.set_recommand_time DESC , cam.create_time DESC
+        </if>
+        <if test="pageIndex != null and pageSize != null">
+            limit #{pageIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+        </if>
+    </select>
+    <select id="getArticleMarketListByIds" resultType="ArticleMarketVo">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM cms_article_market
+        WHERE id IN
+        <foreach collection="list" item="id" open="(" close=")" index="index" separator=",">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="getDetailById" parameterType="java.lang.Integer" resultType="ArticleMarketVo" >
+        SELECT
+        <include refid="Base_Column_List"/>,
+        <include refid="Blob_Column_List"/>
+        FROM cms_article_market
+        WHERE  1 =1
+        AND id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="getAllIds" resultType="java.lang.Integer">
+        SELECT id
+        FROM  cms_article_market
+    </select>
+    <update id="updateViewCountById" parameterType="java.lang.Integer">
+        UPDATE cms_article_market set view_count = #{viewCount}
+        WHERE id = #{id}
+    </update>
+</mapper>

@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaredstar.cms.mapper.ProductCategoryMapper">
+  <resultMap id="BaseResultMap" type="com.chinaredstar.cms.api.model.ProductCategory">
+    <id column="category_id" jdbcType="INTEGER" property="categoryId" />
+    <result column="category_parent_id" jdbcType="INTEGER" property="categoryParentId" />
+    <result column="category_ancestor" jdbcType="VARCHAR" property="categoryAncestor" />
+    <result column="category_level" jdbcType="INTEGER" property="categoryLevel" />
+    <result column="category_range" jdbcType="VARCHAR" property="categoryRange" />
+    <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+    <result column="use_state" jdbcType="INTEGER" property="useState" />
+    <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
+    <result column="display_order" jdbcType="INTEGER" property="displayOrder" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="create_operator" jdbcType="VARCHAR" property="createOperator" />
+    <result column="update_operator" jdbcType="VARCHAR" property="updateOperator" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    category_id, category_parent_id, category_ancestor, category_level, category_range, 
+    category_name, use_state, img_url, display_order, create_date, create_operator, update_operator
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cms_product_category
+    where category_id = #{categoryId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cms_product_category
+    where category_id = #{categoryId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chinaredstar.cms.api.model.ProductCategory">
+    insert into cms_product_category (category_id, category_parent_id, category_ancestor, 
+      category_level, category_range, category_name, 
+      use_state, img_url, display_order, 
+      create_date, create_operator, update_operator
+      )
+    values (#{categoryId,jdbcType=INTEGER}, #{categoryParentId,jdbcType=INTEGER}, #{categoryAncestor,jdbcType=VARCHAR}, 
+      #{categoryLevel,jdbcType=INTEGER}, #{categoryRange,jdbcType=VARCHAR}, #{categoryName,jdbcType=VARCHAR}, 
+      #{useState,jdbcType=INTEGER}, #{imgUrl,jdbcType=VARCHAR}, #{displayOrder,jdbcType=INTEGER}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{createOperator,jdbcType=VARCHAR}, #{updateOperator,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chinaredstar.cms.api.model.ProductCategory">
+    insert into cms_product_category
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="categoryId != null">
+        category_id,
+      </if>
+      <if test="categoryParentId != null">
+        category_parent_id,
+      </if>
+      <if test="categoryAncestor != null">
+        category_ancestor,
+      </if>
+      <if test="categoryLevel != null">
+        category_level,
+      </if>
+      <if test="categoryRange != null">
+        category_range,
+      </if>
+      <if test="categoryName != null">
+        category_name,
+      </if>
+      <if test="useState != null">
+        use_state,
+      </if>
+      <if test="imgUrl != null">
+        img_url,
+      </if>
+      <if test="displayOrder != null">
+        display_order,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="createOperator != null">
+        create_operator,
+      </if>
+      <if test="updateOperator != null">
+        update_operator,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="categoryId != null">
+        #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="categoryParentId != null">
+        #{categoryParentId,jdbcType=INTEGER},
+      </if>
+      <if test="categoryAncestor != null">
+        #{categoryAncestor,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryLevel != null">
+        #{categoryLevel,jdbcType=INTEGER},
+      </if>
+      <if test="categoryRange != null">
+        #{categoryRange,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryName != null">
+        #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="useState != null">
+        #{useState,jdbcType=INTEGER},
+      </if>
+      <if test="imgUrl != null">
+        #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null">
+        #{displayOrder,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createOperator != null">
+        #{createOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="updateOperator != null">
+        #{updateOperator,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chinaredstar.cms.api.model.ProductCategory">
+    update cms_product_category
+    <set>
+      <if test="categoryParentId != null">
+        category_parent_id = #{categoryParentId,jdbcType=INTEGER},
+      </if>
+      <if test="categoryAncestor != null">
+        category_ancestor = #{categoryAncestor,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryLevel != null">
+        category_level = #{categoryLevel,jdbcType=INTEGER},
+      </if>
+      <if test="categoryRange != null">
+        category_range = #{categoryRange,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryName != null">
+        category_name = #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="useState != null">
+        use_state = #{useState,jdbcType=INTEGER},
+      </if>
+      <if test="imgUrl != null">
+        img_url = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null">
+        display_order = #{displayOrder,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createOperator != null">
+        create_operator = #{createOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="updateOperator != null">
+        update_operator = #{updateOperator,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where category_id = #{categoryId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chinaredstar.cms.api.model.ProductCategory">
+    update cms_product_category
+    set category_parent_id = #{categoryParentId,jdbcType=INTEGER},
+      category_ancestor = #{categoryAncestor,jdbcType=VARCHAR},
+      category_level = #{categoryLevel,jdbcType=INTEGER},
+      category_range = #{categoryRange,jdbcType=VARCHAR},
+      category_name = #{categoryName,jdbcType=VARCHAR},
+      use_state = #{useState,jdbcType=INTEGER},
+      img_url = #{imgUrl,jdbcType=VARCHAR},
+      display_order = #{displayOrder,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      create_operator = #{createOperator,jdbcType=VARCHAR},
+      update_operator = #{updateOperator,jdbcType=VARCHAR}
+    where category_id = #{categoryId,jdbcType=INTEGER}
+  </update>
+</mapper>

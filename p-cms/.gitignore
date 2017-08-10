@@ -1,0 +1,14 @@
+out/
+.idea/
+*.swp
+.svn/
+*.iml
+*.ipl
+target/
+.settings
+.classpath
+*.ipr
+*.iws
+.project
+.classpath
+.settings/

@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaredstar.cms.mapper.RecommendationMapper">
+    <resultMap id="BaseResultMap" type="com.chinaredstar.cms.api.model.Recommendation">
+        <id column="recom_id" jdbcType="BIGINT" property="recomId"/>
+        <result column="sort_id" jdbcType="INTEGER" property="sortId"/>
+        <result column="creater_id" jdbcType="BIGINT" property="createrId"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="sub_type1" jdbcType="INTEGER" property="subType1"/>
+        <result column="sub_type2" jdbcType="INTEGER" property="subType2"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="style" jdbcType="VARCHAR" property="style"/>
+        <result column="cover" jdbcType="VARCHAR" property="cover"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="reviewer_id" jdbcType="BIGINT" property="reviewerId"/>
+        <result column="edit_time" jdbcType="TIMESTAMP" property="editTime"/>
+        <result column="rejiect_reason" jdbcType="VARCHAR" property="rejiectReason"/>
+        <result column="set_top_flg" jdbcType="BIT" property="setTopFlg"/>
+        <result column="set_recom_flg" jdbcType="BIT" property="setRecomFlg"/>
+        <result column="isonline" jdbcType="BIT" property="isonline"/>
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime"/>
+        <result column="end_time" jdbcType="TIMESTAMP" property="endTime"/>
+        <result column="agree_count" jdbcType="INTEGER" property="agreeCount"/>
+        <result column="view_count" jdbcType="INTEGER" property="viewCount"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.chinaredstar.cms.api.model.Recommendation">
+        <result column="context" jdbcType="LONGVARCHAR" property="context"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    recom_id, sort_id, creater_id, type, sub_type1, sub_type2, title, style, cover, status, 
+    create_time, reviewer_id, edit_time, rejiect_reason, set_top_flg, set_recom_flg, 
+    isonline, start_time, end_time, agree_count, view_count
+  </sql>
+    <sql id="Blob_Column_List">
+    context
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from cms_recommendation
+        where recom_id = #{recomId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cms_recommendation
+    where recom_id = #{recomId,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.chinaredstar.cms.api.model.Recommendation">
+    insert into cms_recommendation (recom_id, sort_id, creater_id, 
+      type, sub_type1, sub_type2, 
+      title, style, cover, 
+      status, create_time, reviewer_id, 
+      edit_time, rejiect_reason, set_top_flg, 
+      set_recom_flg, isonline, start_time, 
+      end_time, agree_count, view_count, 
+      context)
+    values (#{recomId,jdbcType=BIGINT}, #{sortId,jdbcType=INTEGER}, #{createrId,jdbcType=BIGINT}, 
+      #{type,jdbcType=INTEGER}, #{subType1,jdbcType=INTEGER}, #{subType2,jdbcType=INTEGER}, 
+      #{title,jdbcType=VARCHAR}, #{style,jdbcType=VARCHAR}, #{cover,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{reviewerId,jdbcType=BIGINT}, 
+      #{editTime,jdbcType=TIMESTAMP}, #{rejiectReason,jdbcType=VARCHAR}, #{setTopFlg,jdbcType=BIT}, 
+      #{setRecomFlg,jdbcType=BIT}, #{isonline,jdbcType=BIT}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{agreeCount,jdbcType=INTEGER}, #{viewCount,jdbcType=INTEGER}, 
+      #{context,jdbcType=LONGVARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.chinaredstar.cms.api.model.Recommendation">
+        insert into cms_recommendation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="recomId != null">
+                recom_id,
+            </if>
+            <if test="sortId != null">
+                sort_id,
+            </if>
+            <if test="createrId != null">
+                creater_id,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="subType1 != null">
+                sub_type1,
+            </if>
+            <if test="subType2 != null">
+                sub_type2,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="style != null">
+                style,
+            </if>
+            <if test="cover != null">
+                cover,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="reviewerId != null">
+                reviewer_id,
+            </if>
+            <if test="editTime != null">
+                edit_time,
+            </if>
+            <if test="rejiectReason != null">
+                rejiect_reason,
+            </if>
+            <if test="setTopFlg != null">
+                set_top_flg,
+            </if>
+            <if test="setRecomFlg != null">
+                set_recom_flg,
+            </if>
+            <if test="isonline != null">
+                isonline,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="agreeCount != null">
+                agree_count,
+            </if>
+            <if test="viewCount != null">
+                view_count,
+            </if>
+            <if test="context != null">
+                context,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="recomId != null">
+                #{recomId,jdbcType=BIGINT},
+            </if>
+            <if test="sortId != null">
+                #{sortId,jdbcType=INTEGER},
+            </if>
+            <if test="createrId != null">
+                #{createrId,jdbcType=BIGINT},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="subType1 != null">
+                #{subType1,jdbcType=INTEGER},
+            </if>
+            <if test="subType2 != null">
+                #{subType2,jdbcType=INTEGER},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="style != null">
+                #{style,jdbcType=VARCHAR},
+            </if>
+            <if test="cover != null">
+                #{cover,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="reviewerId != null">
+                #{reviewerId,jdbcType=BIGINT},
+            </if>
+            <if test="editTime != null">
+                #{editTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="rejiectReason != null">
+                #{rejiectReason,jdbcType=VARCHAR},
+            </if>
+            <if test="setTopFlg != null">
+                #{setTopFlg,jdbcType=BIT},
+            </if>
+            <if test="setRecomFlg != null">
+                #{setRecomFlg,jdbcType=BIT},
+            </if>
+            <if test="isonline != null">
+                #{isonline,jdbcType=BIT},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="agreeCount != null">
+                #{agreeCount,jdbcType=INTEGER},
+            </if>
+            <if test="viewCount != null">
+                #{viewCount,jdbcType=INTEGER},
+            </if>
+            <if test="context != null">
+                #{context,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.chinaredstar.cms.api.model.Recommendation">
+        update cms_recommendation
+        <set>
+            <if test="sortId != null">
+                sort_id = #{sortId,jdbcType=INTEGER},
+            </if>
+            <if test="createrId != null">
+                creater_id = #{createrId,jdbcType=BIGINT},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="subType1 != null">
+                sub_type1 = #{subType1,jdbcType=INTEGER},
+            </if>
+            <if test="subType2 != null">
+                sub_type2 = #{subType2,jdbcType=INTEGER},
+            </if>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="style != null">
+                style = #{style,jdbcType=VARCHAR},
+            </if>
+            <if test="cover != null">
+                cover = #{cover,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="reviewerId != null">
+                reviewer_id = #{reviewerId,jdbcType=BIGINT},
+            </if>
+            <if test="editTime != null">
+                edit_time = #{editTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="rejiectReason != null">
+                rejiect_reason = #{rejiectReason,jdbcType=VARCHAR},
+            </if>
+            <if test="setTopFlg != null">
+                set_top_flg = #{setTopFlg,jdbcType=BIT},
+            </if>
+            <if test="setRecomFlg != null">
+                set_recom_flg = #{setRecomFlg,jdbcType=BIT},
+            </if>
+            <if test="isonline != null">
+                isonline = #{isonline,jdbcType=BIT},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="agreeCount != null">
+                agree_count = #{agreeCount,jdbcType=INTEGER},
+            </if>
+            <if test="viewCount != null">
+                view_count = #{viewCount,jdbcType=INTEGER},
+            </if>
+            <if test="context != null">
+                context = #{context,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where recom_id = #{recomId,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chinaredstar.cms.api.model.Recommendation">
+    update cms_recommendation
+    set sort_id = #{sortId,jdbcType=INTEGER},
+      creater_id = #{createrId,jdbcType=BIGINT},
+      type = #{type,jdbcType=INTEGER},
+      sub_type1 = #{subType1,jdbcType=INTEGER},
+      sub_type2 = #{subType2,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      style = #{style,jdbcType=VARCHAR},
+      cover = #{cover,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      reviewer_id = #{reviewerId,jdbcType=BIGINT},
+      edit_time = #{editTime,jdbcType=TIMESTAMP},
+      rejiect_reason = #{rejiectReason,jdbcType=VARCHAR},
+      set_top_flg = #{setTopFlg,jdbcType=BIT},
+      set_recom_flg = #{setRecomFlg,jdbcType=BIT},
+      isonline = #{isonline,jdbcType=BIT},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      agree_count = #{agreeCount,jdbcType=INTEGER},
+      view_count = #{viewCount,jdbcType=INTEGER},
+      context = #{context,jdbcType=LONGVARCHAR}
+    where recom_id = #{recomId,jdbcType=BIGINT}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="com.chinaredstar.cms.api.model.Recommendation">
+    update cms_recommendation
+    set sort_id = #{sortId,jdbcType=INTEGER},
+      creater_id = #{createrId,jdbcType=BIGINT},
+      type = #{type,jdbcType=INTEGER},
+      sub_type1 = #{subType1,jdbcType=INTEGER},
+      sub_type2 = #{subType2,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      style = #{style,jdbcType=VARCHAR},
+      cover = #{cover,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      reviewer_id = #{reviewerId,jdbcType=BIGINT},
+      edit_time = #{editTime,jdbcType=TIMESTAMP},
+      rejiect_reason = #{rejiectReason,jdbcType=VARCHAR},
+      set_top_flg = #{setTopFlg,jdbcType=BIT},
+      set_recom_flg = #{setRecomFlg,jdbcType=BIT},
+      isonline = #{isonline,jdbcType=BIT},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      agree_count = #{agreeCount,jdbcType=INTEGER},
+      view_count = #{viewCount,jdbcType=INTEGER}
+    where recom_id = #{recomId,jdbcType=BIGINT}
+  </update>
+
+    <select id="getRecommendationListByType" parameterType="RecommendationQueryVo" resultType="RecommendationVo">
+      SELECT
+	    *
+      FROM
+        cms_recommendation
+      WHERE
+	    recom_order_id = (
+		  SELECT
+			  id
+		  FROM
+			  cms_recommendation_order
+		  WHERE
+			  type = #{queryVo.type,jdbcType=INTEGER}
+		  AND sub_type1 = #{queryVo.subType1,jdbcType=INTEGER}
+		  AND sub_type2 = #{queryVo.subType2,jdbcType=INTEGER}
+		  <if test="queryVo.view == null">
+              AND STATUS = 3
+              ORDER BY id
+          </if>
+          <if test="queryVo.view != null">
+              AND STATUS = 2
+              ORDER BY id DESC
+          </if>
+		    LIMIT 1
+	  )
+	  AND set_recom_flg = 1
+        ORDER BY sort_id
+        <if test="page!= null">
+      LIMIT #{page.start}, #{page.pageSize}
+        </if>
+
+  </select>
+
+    <select id="getCmsJzCaseListByIds" resultType="CmsJzCase">
+        SELECT
+        *
+        FROM cms_jz_case
+        WHERE id IN
+        <foreach collection="list" item="id" open="(" close=")" index="index" separator=",">
+            #{id}
+        </foreach>
+
+    </select>
+</mapper>

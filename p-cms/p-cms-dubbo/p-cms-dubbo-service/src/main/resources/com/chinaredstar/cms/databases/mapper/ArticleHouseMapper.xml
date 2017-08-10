@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chinaredstar.cms.mapper.ArticleHouseMapper">
+    <resultMap id="BaseResultMap" type="com.chinaredstar.cms.api.vo.article.ArticleHouseVo">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="sub_title" jdbcType="VARCHAR" property="subTitle"/>
+        <result column="category_tags" jdbcType="VARCHAR" property="categoryTags"/>
+        <result column="cover_img_url" jdbcType="VARCHAR" property="coverImgUrl"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="creator_id" jdbcType="INTEGER" property="creatorId"/>
+        <result column="creator_name" jdbcType="VARCHAR" property="creatorName"/>
+        <result column="content" jdbcType="LONGVARCHAR" property="content"/>
+        <result column="tags" jdbcType="VARCHAR" property="tags"/>
+        <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+      id, title, sub_title, category_tags, cover_img_url, create_time, update_time,creator_id,creator_name,tags,start_time
+    </sql>
+
+    <sql id="Blob_Column_List">
+      content
+    </sql>
+
+    <select id="getArticleHouseListByIds" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM cms_article_house
+        WHERE id IN
+        <foreach collection="list" item="id" open="(" close=")" index="index" separator=",">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="listByCategoryTag" parameterType="com.chinaredstar.cms.api.vo.article.ArticleHouseQueryVo"
+            resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM cms_article_house
+        WHERE 1 = 1
+        AND category_tags = #{categoryTag,jdbcType=VARCHAR}
+        AND check_status = 1
+        AND is_online = 1
+        <if test="isTop != null">
+            AND is_top = #{isTop,jdbcType=BIT}
+        </if>
+
+        <if test="isRecommand != null">
+            AND is_recommand = #{isRecommand,jdbcType=BIT}
+        </if>
+        <if test="orderByStartTime != null and  orderByStartTime">
+            ORDER BY is_top DESC, set_top_time DESC ,start_time DESC, create_time DESC
+        </if>
+        <if test="orderByStartTime == null or  !orderByStartTime">
+            ORDER BY is_top desc, set_top_time DESC , create_time DESC
+        </if>
+        <if test="pageIndex != null and pageSize != null">
+            limit #{pageIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+        </if>
+    </select>
+
+    <select id="getDetailById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>,
+        <include refid="Blob_Column_List"/>
+        FROM cms_article_house
+        WHERE 1 = 1
+        AND id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="getArticleHouseListWithPage" parameterType="com.chinaredstar.cms.api.component.Page"
+            resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM cms_article_house
+        WHERE check_status = 1
+        AND is_online = 1
+        ORDER BY is_top DESC, create_time DESC
+        LIMIT ${start}, ${pageSize}
+    </select>
+    <select id="getAllIds" resultType="java.lang.Integer">
+        SELECT id
+        FROM  cms_article_house
+    </select>
+    <update id="updateViewCountById" parameterType="java.lang.Integer">
+        UPDATE cms_article_house set view_count = #{viewCount}
+        WHERE id = #{id,jdbcType=INTEGER}
+    </update>
+    <insert id="save" parameterType="com.chinaredstar.cms.api.model.ArticleHouse" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO cms_article_house
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="subTitle != null">
+                sub_title,
+            </if>
+            <if test="categoryTags != null">
+                category_tags,
+            </if>
+            <if test="tags != null">
+                tags,
+            </if>
+            <if test="coverImgUrl != null">
+                cover_img_url,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="checkStatus != null">
+                check_status,
+            </if>
+            <if test="source != null">
+                source,
+            </if>
+            <if test="creatorId != null">
+                creator_id,
+            </if>
+            <if test="creatorOpenId != null">
+                creator_open_id,
+            </if>
+            <if test="creatorName != null">
+                creator_name,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+        </trim>
+
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="title != null">
+                #{title},
+            </if>
+            <if test="subTitle != null">
+                #{subTitle},
+            </if>
+            <if test="categoryTags != null">
+                #{categoryTags},
+            </if>
+            <if test="tags != null">
+                #{tags},
+            </if>
+            <if test="coverImgUrl != null">
+                #{coverImgUrl},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+            <if test="checkStatus != null">
+                #{checkStatus},
+            </if>
+            <if test="source != null">
+                #{source},
+            </if>
+            <if test="creatorId != null">
+                #{creatorId},
+            </if>
+            <if test="creatorOpenId != null">
+                #{creatorOpenId},
+            </if>
+            <if test="creatorName != null">
+                #{creatorName},
+            </if>
+            <if test="startTime != null">
+                #{startTime},
+            </if>
+            <if test="endTime != null">
+                #{endTime},
+            </if>
+            <if test="content != null">
+                #{content},
+            </if>
+        </trim>
+
+    </insert>
+    <delete id="deleteById" parameterType="java.lang.Integer">
+     DELETE FROM  cms_article_house WHERE id = #{id}
+    </delete>
+    <update id="updateById" parameterType="com.chinaredstar.cms.api.model.ArticleHouse">
+        update cms_article_house
+        <set>
+            <if test="title != null">
+                title = #{title},
+            </if>
+            <if test="subTitle != null">
+                sub_title = #{subTitle},
+            </if>
+            <if test="categoryTags != null">
+                category_tags = #{categoryTags},
+            </if>
+            <if test="tags != null">
+                tags = #{tags},
+            </if>
+            <if test="coverImgUrl != null">
+                cover_img_url = #{coverImgUrl},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updaterId != null">
+                updater_id = #{updaterId},
+            </if>
+            <if test="updaterOpenId != null">
+                updater_open_id = #{updaterOpenId},
+            </if>
+            <if test="updaterName != null">
+                updater_name = #{updaterName},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime},
+            </if>
+            <if test="content != null">
+                content = #{content},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

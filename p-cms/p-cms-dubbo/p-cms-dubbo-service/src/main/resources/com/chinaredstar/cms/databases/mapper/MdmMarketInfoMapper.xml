@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.chinaredstar.cms.mapper.MdmMarketInfoMapper">
+    <resultMap id="BaseResultMap" type="com.chinaredstar.cms.api.model.MdmMarketInfo">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="id_uuid" property="idUuid" jdbcType="INTEGER"/>
+        <result column="md_guid" property="mdGuid" jdbcType="VARCHAR"/>
+        <result column="mdm_id" property="mdmId" jdbcType="VARCHAR"/>
+        <result column="market_number" property="marketNumber" jdbcType="VARCHAR"/>
+        <result column="market_name" property="marketName" jdbcType="VARCHAR"/>
+        <result column="first_org_id" property="firstOrgId" jdbcType="INTEGER"/>
+        <result column="second_org_id" property="secondOrgId" jdbcType="INTEGER"/>
+        <result column="first_org_name" property="firstOrgName" jdbcType="VARCHAR"/>
+        <result column="second_org_name" property="secondOrgName" jdbcType="VARCHAR"/>
+        <result column="province_id" property="provinceId" jdbcType="VARCHAR"/>
+        <result column="province_name" property="provinceName" jdbcType="VARCHAR"/>
+        <result column="city_id" property="cityId" jdbcType="VARCHAR"/>
+        <result column="city_name" property="cityName" jdbcType="VARCHAR"/>
+        <result column="district_id" property="districtId" jdbcType="INTEGER"/>
+        <result column="market_address" property="marketAddress" jdbcType="VARCHAR"/>
+        <result column="market_short" property="marketShort" jdbcType="VARCHAR"/>
+        <result column="gps" property="gps" jdbcType="VARCHAR"/>
+        <result column="telephone" property="telephone" jdbcType="VARCHAR"/>
+        <result column="is_del" property="isDel" jdbcType="INTEGER"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="mall_code" property="mallCode" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, id_uuid, md_guid, mdm_id, market_number, market_name, first_org_id, second_org_id, 
+    first_org_name, second_org_name, province_id, province_name, city_id, city_name, 
+    district_id, market_address, market_short, gps, telephone, is_del, create_date, update_date,mall_code
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from mdm_market_info
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from mdm_market_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.chinaredstar.cms.api.model.MdmMarketInfo">
+    insert into mdm_market_info (id, id_uuid, md_guid, 
+      mdm_id, market_number, market_name, 
+      first_org_id, second_org_id, first_org_name, 
+      second_org_name, province_id, province_name, 
+      city_id, city_name, district_id, 
+      market_address, market_short, gps, 
+      telephone, is_del, create_date, 
+      update_date,mall_code)
+    values (#{id,jdbcType=INTEGER}, #{idUuid,jdbcType=INTEGER}, #{mdGuid,jdbcType=VARCHAR}, 
+      #{mdmId,jdbcType=VARCHAR}, #{marketNumber,jdbcType=VARCHAR}, #{marketName,jdbcType=VARCHAR}, 
+      #{firstOrgId,jdbcType=INTEGER}, #{secondOrgId,jdbcType=INTEGER}, #{firstOrgName,jdbcType=VARCHAR}, 
+      #{secondOrgName,jdbcType=VARCHAR}, #{provinceId,jdbcType=VARCHAR}, #{provinceName,jdbcType=VARCHAR}, 
+      #{cityId,jdbcType=VARCHAR}, #{cityName,jdbcType=VARCHAR}, #{districtId,jdbcType=INTEGER}, 
+      #{marketAddress,jdbcType=VARCHAR}, #{marketShort,jdbcType=VARCHAR}, #{gps,jdbcType=VARCHAR}, 
+      #{telephone,jdbcType=VARCHAR}, #{isDel,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{updateDate,jdbcType=TIMESTAMP},#{mallCode,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.chinaredstar.cms.api.model.MdmMarketInfo">
+        insert into mdm_market_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="idUuid != null">
+                id_uuid,
+            </if>
+            <if test="mdGuid != null">
+                md_guid,
+            </if>
+            <if test="mdmId != null">
+                mdm_id,
+            </if>
+            <if test="marketNumber != null">
+                market_number,
+            </if>
+            <if test="marketName != null">
+                market_name,
+            </if>
+            <if test="firstOrgId != null">
+                first_org_id,
+            </if>
+            <if test="secondOrgId != null">
+                second_org_id,
+            </if>
+            <if test="firstOrgName != null">
+                first_org_name,
+            </if>
+            <if test="secondOrgName != null">
+                second_org_name,
+            </if>
+            <if test="provinceId != null">
+                province_id,
+            </if>
+            <if test="provinceName != null">
+                province_name,
+            </if>
+            <if test="cityId != null">
+                city_id,
+            </if>
+            <if test="cityName != null">
+                city_name,
+            </if>
+            <if test="districtId != null">
+                district_id,
+            </if>
+            <if test="marketAddress != null">
+                market_address,
+            </if>
+            <if test="marketShort != null">
+                market_short,
+            </if>
+            <if test="gps != null">
+                gps,
+            </if>
+            <if test="telephone != null">
+                telephone,
+            </if>
+            <if test="isDel != null">
+                is_del,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="mallCode != null">
+                mall_code,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="idUuid != null">
+                #{idUuid,jdbcType=INTEGER},
+            </if>
+            <if test="mdGuid != null">
+                #{mdGuid,jdbcType=VARCHAR},
+            </if>
+            <if test="mdmId != null">
+                #{mdmId,jdbcType=VARCHAR},
+            </if>
+            <if test="marketNumber != null">
+                #{marketNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="marketName != null">
+                #{marketName,jdbcType=VARCHAR},
+            </if>
+            <if test="firstOrgId != null">
+                #{firstOrgId,jdbcType=INTEGER},
+            </if>
+            <if test="secondOrgId != null">
+                #{secondOrgId,jdbcType=INTEGER},
+            </if>
+            <if test="firstOrgName != null">
+                #{firstOrgName,jdbcType=VARCHAR},
+            </if>
+            <if test="secondOrgName != null">
+                #{secondOrgName,jdbcType=VARCHAR},
+            </if>
+            <if test="provinceId != null">
+                #{provinceId,jdbcType=VARCHAR},
+            </if>
+            <if test="provinceName != null">
+                #{provinceName,jdbcType=VARCHAR},
+            </if>
+            <if test="cityId != null">
+                #{cityId,jdbcType=VARCHAR},
+            </if>
+            <if test="cityName != null">
+                #{cityName,jdbcType=VARCHAR},
+            </if>
+            <if test="districtId != null">
+                #{districtId,jdbcType=INTEGER},
+            </if>
+            <if test="marketAddress != null">
+                #{marketAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="marketShort != null">
+                #{marketShort,jdbcType=VARCHAR},
+            </if>
+            <if test="gps != null">
+                #{gps,jdbcType=VARCHAR},
+            </if>
+            <if test="telephone != null">
+                #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="isDel != null">
+                #{isDel,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="mallCode != null">
+                #{mallCode,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.chinaredstar.cms.api.model.MdmMarketInfo">
+        update mdm_market_info
+        <set>
+            <if test="idUuid != null">
+                id_uuid = #{idUuid,jdbcType=INTEGER},
+            </if>
+            <if test="mdGuid != null">
+                md_guid = #{mdGuid,jdbcType=VARCHAR},
+            </if>
+            <if test="mdmId != null">
+                mdm_id = #{mdmId,jdbcType=VARCHAR},
+            </if>
+            <if test="marketNumber != null">
+                market_number = #{marketNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="marketName != null">
+                market_name = #{marketName,jdbcType=VARCHAR},
+            </if>
+            <if test="firstOrgId != null">
+                first_org_id = #{firstOrgId,jdbcType=INTEGER},
+            </if>
+            <if test="secondOrgId != null">
+                second_org_id = #{secondOrgId,jdbcType=INTEGER},
+            </if>
+            <if test="firstOrgName != null">
+                first_org_name = #{firstOrgName,jdbcType=VARCHAR},
+            </if>
+            <if test="secondOrgName != null">
+                second_org_name = #{secondOrgName,jdbcType=VARCHAR},
+            </if>
+            <if test="provinceId != null">
+                province_id = #{provinceId,jdbcType=VARCHAR},
+            </if>
+            <if test="provinceName != null">
+                province_name = #{provinceName,jdbcType=VARCHAR},
+            </if>
+            <if test="cityId != null">
+                city_id = #{cityId,jdbcType=VARCHAR},
+            </if>
+            <if test="cityName != null">
+                city_name = #{cityName,jdbcType=VARCHAR},
+            </if>
+            <if test="districtId != null">
+                district_id = #{districtId,jdbcType=INTEGER},
+            </if>
+            <if test="marketAddress != null">
+                market_address = #{marketAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="marketShort != null">
+                market_short = #{marketShort,jdbcType=VARCHAR},
+            </if>
+            <if test="gps != null">
+                gps = #{gps,jdbcType=VARCHAR},
+            </if>
+            <if test="telephone != null">
+                telephone = #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="isDel != null">
+                is_del = #{isDel,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="mallCode != null">
+                mall_code = #{mallCode,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.chinaredstar.cms.api.model.MdmMarketInfo">
+    update mdm_market_info
+    set id_uuid = #{idUuid,jdbcType=INTEGER},
+      md_guid = #{mdGuid,jdbcType=VARCHAR},
+      mdm_id = #{mdmId,jdbcType=VARCHAR},
+      market_number = #{marketNumber,jdbcType=VARCHAR},
+      market_name = #{marketName,jdbcType=VARCHAR},
+      first_org_id = #{firstOrgId,jdbcType=INTEGER},
+      second_org_id = #{secondOrgId,jdbcType=INTEGER},
+      first_org_name = #{firstOrgName,jdbcType=VARCHAR},
+      second_org_name = #{secondOrgName,jdbcType=VARCHAR},
+      province_id = #{provinceId,jdbcType=VARCHAR},
+      province_name = #{provinceName,jdbcType=VARCHAR},
+      city_id = #{cityId,jdbcType=VARCHAR},
+      city_name = #{cityName,jdbcType=VARCHAR},
+      district_id = #{districtId,jdbcType=INTEGER},
+      market_address = #{marketAddress,jdbcType=VARCHAR},
+      market_short = #{marketShort,jdbcType=VARCHAR},
+      gps = #{gps,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      is_del = #{isDel,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+       mall_code = #{mallCode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+    <select id="queryByMdGuid" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM mdm_market_info
+        WHERE 1 = 1
+        AND is_del=0
+        AND md_guid = #{mdGuid,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByMdGuid" parameterType="java.lang.String">
+     update mdm_market_info
+     set is_del = 1
+     where md_guid = #{mdGuid,jdbcType=VARCHAR}
+    </delete>
+
+
+    <update id="updateByMdGuid" parameterType="com.chinaredstar.cms.api.model.MdmMarketInfo">
+        update mdm_market_info
+        <set>
+            <if test="idUuid != null">
+                id_uuid = #{idUuid,jdbcType=INTEGER},
+            </if>
+            <if test="mdGuid != null">
+                md_guid = #{mdGuid,jdbcType=VARCHAR},
+            </if>
+            <if test="mdmId != null">
+                mdm_id = #{mdmId,jdbcType=VARCHAR},
+            </if>
+            <if test="marketNumber != null">
+                market_number = #{marketNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="marketName != null">
+                market_name = #{marketName,jdbcType=VARCHAR},
+            </if>
+            <if test="firstOrgId != null">
+                first_org_id = #{firstOrgId,jdbcType=INTEGER},
+            </if>
+            <if test="secondOrgId != null">
+                second_org_id = #{secondOrgId,jdbcType=INTEGER},
+            </if>
+            <if test="firstOrgName != null">
+                first_org_name = #{firstOrgName,jdbcType=VARCHAR},
+            </if>
+            <if test="secondOrgName != null">
+                second_org_name = #{secondOrgName,jdbcType=VARCHAR},
+            </if>
+            <if test="provinceId != null">
+                province_id = #{provinceId,jdbcType=VARCHAR},
+            </if>
+            <if test="provinceName != null">
+                province_name = #{provinceName,jdbcType=VARCHAR},
+            </if>
+            <if test="cityId != null">
+                city_id = #{cityId,jdbcType=VARCHAR},
+            </if>
+            <if test="cityName != null">
+                city_name = #{cityName,jdbcType=VARCHAR},
+            </if>
+            <if test="districtId != null">
+                district_id = #{districtId,jdbcType=INTEGER},
+            </if>
+            <if test="marketAddress != null">
+                market_address = #{marketAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="marketShort != null">
+                market_short = #{marketShort,jdbcType=VARCHAR},
+            </if>
+            <if test="gps != null">
+                gps = #{gps,jdbcType=VARCHAR},
+            </if>
+            <if test="telephone != null">
+                telephone = #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="isDel != null">
+                is_del = #{isDel,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="mallCode != null">
+                mall_code = #{mallCode,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where md_guid = #{mdGuid,jdbcType=VARCHAR}
+    </update>
+
+
+</mapper>

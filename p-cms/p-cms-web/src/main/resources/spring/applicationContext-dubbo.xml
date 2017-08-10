@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+    http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <dubbo:monitor protocol="registry"/>
+
+    <!--<dubbo:consumer version="1.0.0"/>-->
+    <dubbo:consumer check="false" />
+
+
+    <!-- 精选专题接口 -->
+    <dubbo:reference id="cmsIndexTopicService" interface="com.chinaredstar.cms.api.service.CmsIndexTopicService" timeout="3000"/>
+
+    <!-- 领券中心banner接口 -->
+    <dubbo:reference id="cmsIndexTicketService" interface="com.chinaredstar.cms.api.service.CmsIndexTicketService" timeout="3000"/>
+
+    <!-- 大牌接口 -->
+    <dubbo:reference id="cmsIndexBrandService" interface="com.chinaredstar.cms.api.service.CmsIndexBrandService" timeout="3000"/>
+
+    <!-- 限时购接口 -->
+    <dubbo:reference id="cmsIndexPromotionService" interface="com.chinaredstar.cms.api.service.CmsIndexPromotionService" timeout="3000"/>
+
+    <!-- 生活家接口 -->
+    <dubbo:reference id="cmsIndexLifeService" interface="com.chinaredstar.cms.api.service.CmsIndexLifeService" timeout="3000"/>
+
+    <!-- 模块配置 -->
+    <dubbo:reference id="cmsIndexModuleConfigService" interface="com.chinaredstar.cms.api.service.CmsIndexModuleConfigService" timeout="3000"/>
+
+    <!-- 分类管理 -->
+    <dubbo:reference id="cmsIndexCategoryService" interface="com.chinaredstar.cms.api.service.CmsIndexCategoryService" timeout="3000"/>
+
+    <!-- 带城市位置的广告 -->
+    <dubbo:reference id="cmsIndexAdvertisementService" interface="com.chinaredstar.cms.api.service.CmsIndexAdvertisementService" timeout="3000"/>
+
+
+    <!-- 商场品牌合辑 -->
+    <dubbo:reference id="cmsIndexCollectionService" interface="com.chinaredstar.cms.api.service.CmsIndexCollectionService" timeout="3000"/>
+
+    <!-- 图集接口 -->
+    <dubbo:reference id="atlasService" interface="com.chinaredstar.cms.api.service.AtlasService" timeout="3000"/>
+
+    <!-- 广告服务 -->
+    <dubbo:reference id="advertisementService" interface="com.chinaredstar.cms.api.service.AdvertisementService" timeout="3000"/>
+
+    <!-- 合辑服务 -->
+    <dubbo:reference id="collectionService" interface="com.chinaredstar.cms.api.service.CmsCollectionService"
+                     timeout="3000"/>
+
+    <!-- 商品文章接口  -->
+    <dubbo:reference id="articleMarketService" interface="com.chinaredstar.cms.api.service.ArticleMarketService" timeout="3000"/>
+
+    <!-- 推荐服务 -->
+    <dubbo:reference id="recommendationService" interface="com.chinaredstar.cms.api.service.RecommendationService"
+                     timeout="3000"/>
+
+    <!-- 家装文章 -->
+    <dubbo:reference id="articleHomeService" interface="com.chinaredstar.cms.api.service.ArticleHomeService"
+                     timeout="3000" retries="0"/>
+
+    <!-- 百科服务 -->
+    <dubbo:reference id="encyclopediaService" interface="com.chinaredstar.cms.api.service.EncyclopediaService" timeout="3000"/>
+
+    <!-- 房产文章 -->
+    <dubbo:reference id="articleHouseService" interface="com.chinaredstar.cms.api.service.ArticleHouseService" timeout="3000"/>
+
+    <!-- 外链服务 -->
+    <dubbo:reference id="outlinkService" interface="com.chinaredstar.cms.api.service.OutlinkService" timeout="3000"/>
+
+    <!-- 专题合集 -->
+    <dubbo:reference id="topicService" interface="com.chinaredstar.cms.api.service.TopicService" timeout="3000"/>
+
+
+    <!-- 分类服务 -->
+    <dubbo:reference id="cmsClassService" interface="com.chinaredstar.cms.api.service.CmsClassService" timeout="3000"/>
+
+    <!-- 商品文章 -->
+    <dubbo:reference id="articleCustomService" interface="com.chinaredstar.cms.api.service.ArticleCustomService" timeout="3000"/>
+
+    <!-- 设计师服务 -->
+    <dubbo:reference id="designerServiceApi" interface="com.chinaredstar.jiazhuang.api.DesignerServiceApi"
+                     timeout="3000" version="1.0.1"/>
+
+    <!-- 方案服务 -->
+    <dubbo:reference id="caseSericeApi" interface="com.chinaredstar.jiazhuang.api.CaseServiceApi" timeout="3000"
+                     version="1.0.1"/>
+
+    <!-- 品牌服务 -->
+    <dubbo:reference id="omsBrandInfoService" interface="com.redstar.digital.open.service.OmsBrandInfoService"
+                     timeout="3000" version="2.0.0"/>
+
+    <!-- 显示分类 -->
+    <dubbo:reference id="showCategoryService" interface="com.redstar.digital.open.service.ShowCategoryService"
+                     timeout="3000" version="2.0.0"/>
+
+    <!-- 商场位置 -->
+    <dubbo:reference id="omsMarketInfoService" interface="com.redstar.digital.open.service.OmsMarketInfoService"
+                     timeout="3000" version="2.0.0"/>
+
+    <!-- 广告位置 -->
+    <dubbo:reference id="advertisementPositionService" interface="com.chinaredstar.cms.api.service.AdvertisementPositionService" timeout="3000"/>
+
+    <!-- 导购员服务 -->
+    <dubbo:reference id="omsShopInfoService" interface="com.redstar.digital.open.service.OmsShopInfoService"
+                     timeout="3000" version="2.0.0"/>
+
+    <!--活动品牌服务 -->
+    <dubbo:reference id="campaignService" interface="com.chinaredstar.cms.api.service.CampaignService"
+                     timeout="3000" />
+    <!-- 图集接口 -->
+    <dubbo:reference id="activityService" interface="com.chinaredstar.cms.api.service.ActivityService"
+                     timeout="3000"/>
+
+    <!-- 直播服务 -->
+    <dubbo:reference id="zbRoomService" interface="com.chinaredstar.ilvb.api.service.IZbRoomService" version="0.0.1" check="false" timeout="3000"/>
+
+    <!--优惠券服务-->
+    <!--<dubbo:reference id="cuponQueryService" interface="com.chinaredstar.p_trade_promotion.api.ICuponQueryService"-->
+                     <!--timeout="30000" version="1.0.1" check="false"/>-->
+    <!--商品促销信息-->
+    <!--<dubbo:reference id="promotionService" interface="com.chinaredstar.p_trade_promotion.api.IPromotionService"-->
+                     <!--timeout="30000" version="1.0.1" check="false"/>-->
+
+    <!--领券信息-->
+    <!--<dubbo:reference id="cuponIssueService" interface="com.chinaredstar.p_trade_promotion.api.ICuponIssueService"-->
+                     <!--timeout="30000" version="1.0.1" check="false"/>-->
+
+    <!--商品服务-->
+    <dubbo:reference id="productShopGoodsService" interface="com.redstar.digital.open.service.ProductShopGoodsService"
+                     timeout="3000" version="2.0.0" check="false"/>
+
+
+    <dubbo:reference id="msgService" interface="com.redstar.sms.api.MsgService" timeout="3000" check="false"
+                     retries="0"  owner="cms_activity"   />
+
+    <dubbo:reference interface="com.chinaredstar.uc.dubbo.core.api.IUserService" id="iUserService" version="1.1.1"
+                     timeout="3000"   owner="cms_activity" check="false" retries="0" />
+    <!--学生操作-->
+    <dubbo:reference id="studentService" interface="com.chinaredstar.cms.api.service.StudentService" timeout="3000"/>
+
+
+
+
+</beans>
